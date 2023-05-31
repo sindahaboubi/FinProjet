@@ -11,6 +11,7 @@ import { MembreService } from 'src/app/service/membre.service';
 import { RoleService } from 'src/app/service/role.service';
 import Swal from 'sweetalert2';
 import { roleExists } from '../../select-projet/email-exists.validator';
+import { ChefProjetServiceService } from 'src/app/service/chef-projet-service.service';
 
 interface Request {
   invitation: Invitation;
@@ -43,6 +44,7 @@ export class InvitationComponent implements OnInit {
     private invitationService: InvitationService,
     private roleService:RoleService,
     private fb:FormBuilder,
+    private chefProjetService:ChefProjetServiceService,
     @Inject(MAT_DIALOG_DATA) public data:InvitationPanel ,
   ){}
   invitationForm:FormGroup;
@@ -51,7 +53,7 @@ export class InvitationComponent implements OnInit {
   combinedForm:FormGroup;
   membreList:Membre[]
 
-  
+
 
   ngOnInit(): void {
 
@@ -59,9 +61,9 @@ export class InvitationComponent implements OnInit {
       data => {
         this.roleService.afficherListRoleParProjet(this.data.projet.id).subscribe(
           dataRoles => {
-            
+
             this.roleForm.get('type').setValidators([Validators.required,roleExists(dataRoles)])
-            this.membreList =data.filter(membre=> membre.id != dataRoles.find(role => role.pk.membreId == membre?.id)?.pk.membreId) 
+            this.membreList =data.filter(membre=> membre.id != dataRoles.find(role => role.pk.membreId == membre?.id)?.pk.membreId)
           }
         )
       }
@@ -73,11 +75,11 @@ export class InvitationComponent implements OnInit {
     })
 
     this.invitationForm = this.fb.group({
-      chefProjetId:1,
+      chefProjetId:this.chefProjetService.getChefProjetFromToken().id,
       emailInvitee:"",
       membreId:null
     })
-    
+
     this.roleForm = this.fb.group({
       pk:this.rolePkForm,
       type :["",Validators.required],
@@ -87,7 +89,7 @@ export class InvitationComponent implements OnInit {
       invitation:null
     })
 
-   
+
     this.combinedForm = this.fb.group({
       invitation:this.invitationForm,
       role:this.roleForm
@@ -108,14 +110,14 @@ export class InvitationComponent implements OnInit {
       }
     )
 
-    
+
   }
 
 
   allValid(){
-    return this.roleForm.valid 
-    && this.rolePkForm.valid 
-    && this.invitationForm.valid  
+    return this.roleForm.valid
+    && this.rolePkForm.valid
+    && this.invitationForm.valid
   }
 
   inviter(){
@@ -126,7 +128,7 @@ export class InvitationComponent implements OnInit {
     }
     this.invitationService.envoyerInvitation(request).subscribe(
       data => {
-        this.roleForm.get('invitation').setValue(data) 
+        this.roleForm.get('invitation').setValue(data)
         console.log(this.roleForm.get('invitation').value);
         let role:Role = this.roleForm.value
         role.pk.membreId = data.membreId
@@ -154,7 +156,7 @@ export class InvitationComponent implements OnInit {
       'Invitation Envoiyée',
       'success',
     )
-    
+
   }
 
 }

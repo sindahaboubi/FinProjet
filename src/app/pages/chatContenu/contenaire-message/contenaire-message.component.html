@@ -2,10 +2,10 @@
 <ng-container *ngIf="reponses.length==0" >
 <div  class="d-flex justify-content-center" style="align-items: center;flex-direction:column;" >
     <img src="../../../../assets/robot.gif" style="height:25rem" />
-    <h2>Salut, 
+    <h2 style="color:rgb(61, 61, 61)">Bonjour,
         <span *ngIf="membre" class="text-primary">{{membre.id}}</span>
         <span *ngIf="chefProjet" class="text-primary">{{chefProjet.id}}</span>
-        je suis là pour vous aidez
+         en quoi puis-je vous aider en Scrum ?
     </h2>
 </div>
 </ng-container>
@@ -17,23 +17,23 @@
     <p class="m-1">{{rep.question.text}}</p>
     <img
      src="../../../../assets/user.jpg"
-      class="rounded-circle" 
+      class="rounded-circle"
       matTooltip="vous"
-      width="30" 
+      width="30"
       height="30" />
-    </div>  
+    </div>
     <br>
     <div class="p-2 bd-highlight d-flex  flex-row">
         <img
         src="../../../../assets/openai.png"
-         class="rounded-3" 
+         class="rounded-3"
          matTooltip="vous"
-         width="40" 
+         width="40"
          height="40" />
     <p style="margin-left:2%;" *ngIf="rep.useHtml" [innerHTML]="rep.text"></p>
     <p style="margin-left:2%;" *ngIf="!rep.useHtml">{{rep.text}}</p>
     </div>
-</div>  
+</div>
 </ng-container>
 <!-- end -->
 

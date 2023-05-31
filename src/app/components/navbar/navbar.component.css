@@ -1,10 +1,17 @@
-/* .container-fluid{
-background-color: rgb(34, 18, 3);
-} */
-
-* {
+/* * {
   box-sizing: border-box;
 }
+
+.logoProjet{
+  width: 80%;
+  height: 70%;
+}
+
+.navbar-toggler-bar {
+  background-color: white;
+  width: 20px;
+}
+
 
 .photo{
   height: 30px;
@@ -17,15 +24,8 @@ body {
   font-family: 'segoe ui';
 }
 
-/* .nav {
-  height: 50px;
-  width: 100%;
-  background-color: #4d4d4d;
-  position: relative;
-} */
-
 .nav {
-  height: 50px;
+  height: 14%;
   width: 100%;
   background-color: #4d4d4d;
   position: fixed;
@@ -46,25 +46,8 @@ body {
   text-transform: uppercase;
 }
 
-.nav > .nav-header {
-  display: inline;
-}
-
-.nav > .nav-header > .nav-title {
-  display: inline-block;
-  font-size: 22px;
-  color: #fff;
-  padding: 10px 10px 10px 10px;
-}
-
 .nav > .nav-btn {
   display: none;
-}
-
-.nav > .nav-links {
-  display: inline;
-  float: right;
-  font-size: 18px;
 }
 
 .nav > .nav-links > a {
@@ -104,17 +87,18 @@ body {
     height: 10px;
     border-top: 2px solid #eee;
   }
+
   .nav > .nav-links {
-    position: absolute;
-    display: block;
-    width: 100%;
-    background-color: #333;
-    height: 0px;
-    transition: all 0.3s ease-in;
-    overflow-y: hidden;
-    top: 50px;
-    left: 0px;
+    display: inline;
+    float: right;
+    font-size: 18px;
   }
+
+  .nav > .nav-header {
+    display: inline;
+    float: left;
+  }
+
   .nav > .nav-links > a {
     display: block;
     width: 100%;
@@ -126,4 +110,87 @@ body {
     height: calc(100vh - 50px);
     overflow-y: auto;
   }
+} */
+
+
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgb(90, 89, 89);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  color: white;
+  height: 12%;
+  width: 100%;
+  z-index: 9999;
+}
+
+.navbar.scrolled {
+  background-color: rgb(161, 161, 161);
+}
+
+.logo-left {
+  width: 140px;
+  height: 50px;
+  margin-left: 40px;
+}
+
+.social-icons {
+  display: flex;
+  margin-right: 40px;
+}
+
+.social-icons a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 30px;
+  color: white;
+  text-decoration: none;
+  font-size:17px;
+  cursor:default;
+  transition: color 0.3s ease;
+}
+
+.photo{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-bottom: 5px;
+}
+
+.social-icons a:hover{
+  color: rgb(0, 255, 242);
+}
+
+.social-icons a i {
+  margin-bottom: 5px;
+}
+
+.dropdown-navbar{
+  width: 65px;
+}
+
+.nav-item, .nav-link{
+  color:black;
+  font-size: 13px;
+  text-align: center;
+}
+
+.nav-link:hover{
+  cursor: pointer;
+}
+
+.navbar a.active {
+  font-weight: bold;
+}
+
+.photoProfil{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }

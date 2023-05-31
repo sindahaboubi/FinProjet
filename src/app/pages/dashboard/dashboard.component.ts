@@ -100,7 +100,7 @@ export class DashboardComponent implements OnInit {
                   display: true,
                   text: `Burn Down Chart`,
                   fontSize: 20,
-                  fontColor: 'rgb(226, 226, 226)'
+                  fontColor: 'black'
                 },
                 responsive: true,
                 scales: {
@@ -114,7 +114,7 @@ export class DashboardComponent implements OnInit {
                     scaleLabel: {
                       display: true,
                       labelString: 'Jours de sprint',
-                      fontColor: 'rgb(226, 226, 226)',
+                      fontColor: 'black',
                       fontSize:14
                     },
                     ticks: {
@@ -130,7 +130,7 @@ export class DashboardComponent implements OnInit {
                     scaleLabel: {
                       display: true,
                       labelString: 'Effort restant (points)',
-                      fontColor: 'rgb(226, 226, 226)',
+                      fontColor: 'black',
                       fontSize: 14
                     }
                   }]
@@ -395,14 +395,14 @@ export class DashboardComponent implements OnInit {
         display: true,
         text: 'Burn-up chart',
         fontSize: 20,
-        fontColor: 'rgb(226, 226, 226)'
+        fontColor: 'black'
       },
       scales: {
       xAxes: [{
         scaleLabel: {
           display: true,
           labelString: 'Sprints',
-          fontColor: 'rgb(226, 226, 226)',
+          fontColor: 'black',
           fontSize: 14
         }
       }],
@@ -411,7 +411,7 @@ export class DashboardComponent implements OnInit {
         scaleLabel: {
           display: true,
           labelString: 'Efforts (en points )',
-          fontColor: 'rgb(226, 226, 226)',
+          fontColor: 'black',
           fontSize: 14
         },
         ticks: {

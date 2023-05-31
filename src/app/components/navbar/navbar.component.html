@@ -1,4 +1,4 @@
-<ng-template #content let-modal>
+<!-- <ng-template #content let-modal>
   <div class="modal-header">
     <input class="form-control" id="inlineFormInputGroup" placeholder="SEARCH" type="text" />
     <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="modal.dismiss('Cross click')">
@@ -6,6 +6,8 @@
     </button>
   </div>
 </ng-template>
+
+
 
 
 <div class="nav" [ngClass]="{'scrolled': navbarScrolled}">
@@ -21,6 +23,8 @@
       ProJiro
     </div>
   </div>
+
+
   <div class="nav-btn">
     <label for="nav-check">
       <span></span>
@@ -29,7 +33,7 @@
     </label>
   </div>
 
-  <div class="nav-links">
+  <div class=nav-links">
 
     <a data-target="#searchModal" data-toggle="modal" (click)="openSearchPanel()">
       <i class=" tim-icons icon-zoom-split" id="search-button"></i>
@@ -43,18 +47,18 @@
     <a ngbDropdown>
       <img class="photo" data-toggle="dropdown" alt="Profile Photo" src="assets/img/anime3.png" href="javascript:void(0)" ngbDropdownToggle/>
       <ul class=" dropdown-navbar" ngbDropdownMenu>
-        <li class=" nav-link">
+        <li class="nav-link">
           <a class=" nav-item" (click)="navigationProjet()" ngbDropdownItem>
             Liste de projets
           </a>
         </li>
-        <li class=" nav-link">
+        <li class="nav-link">
           <a class=" nav-item" routerLink="/user" ngbDropdownItem>
             Paramétres du compte
           </a>
         </li>
         <li class=" dropdown-divider"></li>
-        <li class=" nav-link">
+        <li class="nav-link">
           <a class=" nav-item" (click)="logOut()" ngbDropdownItem>
             Se déconnecter
           </a>
@@ -64,7 +68,7 @@
 
     <a ngbDropdown>
         <a
-          class="nav-link"
+          class=nav-link"
           data-toggle="dropdown"
           href="javascript:void(0)"
           ngbDropdownToggle
@@ -73,7 +77,7 @@
           <i class=" tim-icons icon-bell-55" [matBadge]="listeRole?.length == 0 ? [] : listeRole?.length" matBadgeColor="warn"></i>
         </a>
         <ul class=" dropdown-menu-right dropdown-navbar" ngbDropdownMenu>
-          <li class=" nav-link" *ngFor="let role of listeRole">
+          <li class="nav-link" *ngFor="let role of listeRole">
             <div class=" nav-item" ngbDropdownItem disabled>
               vous Êtes inviter à rejoindre le projet
               <span class="text-primary">{{role.projet.nom}}</span>
@@ -94,4 +98,92 @@
     </a>
 
   </div>
-</div>
+</div> -->
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <input class="form-control" id="inlineFormInputGroup" placeholder="SEARCH" type="text" />
+    <button aria-label="Close" class=" close" data-dismiss="modal" type="button" (click)="modal.dismiss('Cross click')">
+      <i class="tim-icons icon-simple-remove"></i>
+    </button>
+  </div>
+</ng-template>
+
+<nav class="navbar" [ngClass]="{'scrolled': navbarScrolled}">
+  <img src="assets/images/logoProjet.png" class="logo-left">
+  <div class="social-icons">
+    <a [routerLinkActive]="'active'" data-target="#searchModal" data-toggle="modal" (click)="openSearchPanel()" *ngIf="!isOnProjetsPage()">
+      <span>
+        <i class="fas fa-search icone" id="search-button" ></i>
+      </span>
+      Rechercher
+    </a>
+
+    <a [routerLinkActive]="'active'" *ngIf="role == 'chefProjet' && !isOnProjetsPage()" (click)="openDialogInvitation()" id="search-button">
+      <span>
+        <i class="fas fa-user-plus"></i>
+      </span>Inviter
+    </a>
+
+    <a [routerLinkActive]="'active'" ngbDropdown>
+      <span data-toggle="dropdown" href="javascript:void(0)" ngbDropdownToggle>
+        <i class="fas fa-user-circle"></i>
+      </span>
+      <span *ngIf="role=='chefProjet'">Chef projet</span>
+      <span *ngIf="role=='dev team'">Développeur</span>
+      <span *ngIf="role=='po'">Product owner</span>
+
+
+      <ul class="dropdown-navbar" ngbDropdownMenu>
+        <li class="nav-link" (click)="navigationProjet()" ngbDropdownItem>
+            <i class="fas fa-list"></i> Mes projets
+        </li>
+
+        <li class="nav-link" routerLink="/user" ngbDropdownItem>
+            <i class="fas fa-cog"></i> Mon compte
+        </li>
+
+        <hr>
+        <li class="nav-link" (click)="logOut()" ngbDropdownItem>
+            <i class="fas fa-sign-out-alt"></i> Se déconnecter
+        </li>
+      </ul>
+    </a>
+
+
+    <a [routerLinkActive]="'active'" ngbDropdown>
+      <span
+        data-toggle="dropdown"
+        href="javascript:void(0)"
+        ngbDropdownToggle
+      >
+        <div class="  d-none d-lg-block d-xl-block"></div>
+        <i class=" tim-icons icon-bell-55" [matBadge]="listeRole?.length == 0 ? [] : listeRole?.length"></i>
+    </span>
+    Notifications
+      <ul class=" dropdown-menu-right dropdown-navbar" ngbDropdownMenu>
+        <li class="nav-link" *ngFor="let role of listeRole">
+          <div class=" nav-item" ngbDropdownItem disabled>
+            Vous êtes invité de rejoindre le projet
+            <span class="text-primary">{{role.projet.nom}}</span>
+          </div>
+          <div class="nav-item" ngbDropdownItem disabled>
+            Vous aurez le rôle
+            <span class="text-primary" *ngIf="role.type == 'dev team'">Membre de développement</span>
+            <span class="text-primary" *ngIf="role.type == 'scrum master'">Scrum master</span>
+            <span class="text-primary" *ngIf="role.type == 'po'">Product owner</span>
+          </div>
+          <div class="d-flex justify-content-center">
+            <button mat-raised-button class="h-25 w-25" (click)="accepter(role)" style="margin-right:1%;" color="primary">Accepter</button>
+            <button mat-raised-button class="h-25 w-25" (click)="refuser(role)" color="accent">Refuser</button>
+          </div>
+          <hr>
+        </li>
+      </ul>
+      </a>
+
+  </div>
+</nav>
+
+

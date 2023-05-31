@@ -38,7 +38,19 @@ export class AuthentificationService {
     const decodedToken = this.decodeToken(token);
     const roles = this.extractRolesFromToken(decodedToken);
     if(roles.includes('chefProjet')){
-      const { id, email, nom, prenom, adresse, username, telephone, status, dateInscription } = decodedToken;
+      const { id, email, nom, prenom, adresse, username, telephone, dateInscription, photo, pwd } = decodedToken;
+
+      let photoData: Uint8Array | Array<Uint8Array>;
+
+      if (photo) {
+        if (Array.isArray(photo)) {
+          photoData = photo.map(p => new Uint8Array(atob(p).split('').map(c => c.charCodeAt(0))));
+        } else {
+          photoData = new Uint8Array(atob(photo).split('').map(c => c.charCodeAt(0)));
+        }
+      } else {
+        photoData = [];
+      }
       const chefProjet: ChefProjet = {
         id:id,
         email:email,
@@ -47,11 +59,27 @@ export class AuthentificationService {
         adresse:adresse,
         username:username,
         telephone:telephone,
-        dateInscription:dateInscription
+        dateInscription:new Date(dateInscription),
+        photo: photoData,
+        pwd: pwd
+
       };
       return {chefProjet, roles};
     }else{
-      const { id, email, nom, prenom, adresse, username, telephone, status, dateInscription } = decodedToken;
+      const { id, email, nom, prenom, adresse, username, telephone, dateInscription, pwd, status, photo } = decodedToken;
+
+      let photoData: Uint8Array | Array<Uint8Array>;
+
+      if (photo) {
+        if (Array.isArray(photo)) {
+          photoData = photo.map(p => new Uint8Array(atob(p).split('').map(c => c.charCodeAt(0))));
+        } else {
+          photoData = new Uint8Array(atob(photo).split('').map(c => c.charCodeAt(0)));
+        }
+      } else {
+        photoData = [];
+      }
+
       const membre: Membre = {
         id,
         email,
@@ -61,7 +89,9 @@ export class AuthentificationService {
         username: username,
         telephone: telephone,
         status: status,
-        dateInscription: dateInscription
+        dateInscription: new Date(dateInscription),
+        pwd:pwd,
+        photo: photoData
       };
       return {membre, roles};
     }

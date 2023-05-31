@@ -1,16 +1,16 @@
-<div class="d-flex">
-  <h1 mat-dialog-title class="mr-auto p-2">Objectif de Sprint : {{data.sprint.objectif}} </h1>
-  <div class="d-flex">
+<div class="d-flex titreDialog">
+  <h1 mat-dialog-title class="mr-auto p-2 titre">Objectif du Sprint : {{data.sprint.objectif}} </h1>
+  <span class="d-flex">
     <ng-container *ngIf="verifDate()">
-    <button mat-stroked-button *ngIf="data.sprint.etat !='terminer'"  (click)="lancerSprintForcer()" class="p-2 m-1" [disabled]="data.sprint.etat=='en cours' || this.data.canStart || this.data.TicketHistoires.length==0 " color="primary">Lancer
-      Sprint</button>
+    <button mat-stroked-button *ngIf="data.sprint.etat !='terminer'"  (click)="lancerSprintForcer()" class="p-2 m-1" [disabled]="data.sprint.etat=='en cours' || this.data.canStart || this.data.TicketHistoires.length==0 " color="primary">
+    </button>
     </ng-container>
-    <span *ngIf="data.sprint.etat =='en cours'" class="etat text-infos" >En cours</span>
-    <span *ngIf="data.sprint.etat =='termine'" class="etat text-success">Terminé</span>
-    <span *ngIf="data.sprint.etat =='en attente'" class="etat text-warning">En attente</span>
-    <mat-icon class="text-warning m-2" *ngIf="data.sprint.etat=='en cours'">alarm</mat-icon>
-  </div>
-  <button mat-icon-button class="p-2" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+    <span *ngIf="data.sprint.etat =='en cours'" class="etat text-infos" ><i class="fas fa-spinner icone"></i> En cours</span>
+    <span *ngIf="data.sprint.etat =='termine'" class="etat text-success"><i class="fas fa-check icone"></i> Terminé</span>
+    <span *ngIf="data.sprint.etat =='en attente'" class="etat text-warning"><i class="fas fa-exclamation-circle icone"></i> En attente</span>
+  </span>
+
+  <button mat-icon-button class="d-flex" [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
@@ -28,16 +28,12 @@
 </div>
 
 
-<div mat-dialog-content>
-
-  <!-- end -->
-
-
-  <button mat-raised-button style="margin-bottom:2%;" (click)="showDetailSprint()">Detail sprint ...</button>
+<div mat-dialog-content class="dialog-container">
+  <button mat-raised-button class="btnDetails" (click)="showDetailSprint()">Plus de détails ...</button>
   <br>
   <ng-container *ngIf="isOpen">
-    <span style="margin-left:3%;" class="title">Velocite de ce sprint : </span>
-    <div class="badge rounded-circle bg-warning">{{data.sprint.velocite}}</div>
+    <span style="margin-left:3%;" class="title">Vélocité : </span>
+    <span style="color:orange">{{data.sprint.velocite}} points</span>
     <div class="container" style="margin-bottom:2%;">
       <div class="row">
         <div class="col-lg-5 col-md-4">
@@ -73,10 +69,17 @@
   </ng-container>
   <!-- contenu de ticket tache -->
   <div class="container">
-    <div style="height:100%" *ngIf="data.TicketHistoires.length==0">
-      <strong class="text-danger d-flex">&nbsp;&nbsp;<mat-icon>warning</mat-icon> ATTENTION </strong>
-      <p class="title text-dark">aucun ticket histoire attacher au Sprint</p>
-      <p class="title text-dark">le sprint ne sera pas lancé ...</p>
+    <div style="height:100%; text-align:center" *ngIf="data.TicketHistoires.length==0">
+
+      <p class="title text-dark">
+        <span style="text-align:center;color:red">
+          <i class="fas fa-exclamation-triangle"></i> Attention
+        </span>
+      </p>
+
+
+      <p class="title text-dark">Aucun ticket histoire attaché à ce sprint</p>
+      <p class="title text-dark">Le sprint ne peut pas être lancé ...</p>
     </div>
     <div class="row" *ngFor="let ht of data.TicketHistoires;index as i">
       <div class="col-md-12">
@@ -194,10 +197,7 @@
 
       </div>
     </div>
+    <button mat-raised-button class="btnAnnuler" [mat-dialog-close]="data.TicketHistoires" cdkFocusInitial>Annuler</button>
 
   </div>
-
-</div>
-<div mat-dialog-actions>
-  <button class="btn-sm btn-outline-dark" [mat-dialog-close]="data.TicketHistoires" cdkFocusInitial>Annuler</button>
 </div>

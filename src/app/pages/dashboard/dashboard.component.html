@@ -1,17 +1,21 @@
 
 <div class="content">
+  <p class="titrePage">
+     <span class=titre>Dashboard</span>
+     <i class="fas fa-chart-bar" style="color:rgb(0, 0, 187); float: right;"></i>
+  </p><br>
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 container">
       <div class="card card-chart">
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
-              <h3 class="card-category" style="color:rgb(226, 226, 226)">
+              <h3 class="card-category" style="color:rgb(10, 10, 10)">
                 <i class="fa-solid fa-bars-progress"></i>
                 Projet ({{projet.nom}})</h3>
             </div>
             <div class="col-sm-6 text-left">
-              <h3 class="card-category" style="color:rgb(226, 226, 226); float:right">
+              <h3 class="card-category" style="color:rgb(10, 10, 10); float:right">
                 <i class="fas fa-calendar-alt"></i> {{projet.dateDebut |date}} - {{projet.dateFin |date}}
               </h3>
             </div>
@@ -26,11 +30,11 @@
 <!-- BurnDownChart -->
   <div class="row" *ngIf="sprints?.length!=0">
     <div class="col-12">
-      <div class="card card-chart">
+      <div id="courbe2" class="card card-chart container">
         <div class="card-header">
           <div class="row">
             <div class="col-sm-6 text-left">
-              <h5 class="card-category" style="color:rgb(226, 226, 226)">
+              <h5 class="card-category" style="color:rgb(10, 10, 10)">
                 <i class="fas fa-calendar-alt"></i>
                 {{sprints[sprintSelectedIndex].dateLancement |date}} - {{sprints[sprintSelectedIndex].dateFin |date}}</h5>
             </div>
@@ -60,6 +64,6 @@
       </div>
     </div>
   </div>
-  
+
   <app-list-membre-projet></app-list-membre-projet>
 </div>

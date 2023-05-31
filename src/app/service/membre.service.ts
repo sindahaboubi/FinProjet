@@ -63,9 +63,9 @@ export class MembreService {
     )
   }
 
-  modifierProfil(membre: Membre): Observable<Membre> {
-    return this.http.put<Membre>(`${URL}`, membre);
-  }
+  // modifierProfil(membre: Membre): Observable<Membre> {
+  //   return this.http.put<Membre>(`${URL}`, membre);
+  // }
 
   decodeToken(token: string): any {
     const decodedToken = jwt_decode(token);
@@ -101,7 +101,20 @@ export class MembreService {
     const decodedToken = this.decodeToken(token);
     const roles = this.extractRolesFromToken(decodedToken);
     if(!roles.includes('chefProjet')){
-      const { id, email, nom, prenom, adresse, username, telephone, status, dateInscription } = decodedToken;
+      const { id, email, nom, prenom, adresse, username, telephone, status, dateInscription, photo } = decodedToken;
+
+      let photoData: Uint8Array | Array<Uint8Array>;
+
+      if (photo) {
+        if (Array.isArray(photo)) {
+          photoData = photo.map(p => new Uint8Array(atob(p).split('').map(c => c.charCodeAt(0))));
+        } else {
+          photoData = new Uint8Array(atob(photo).split('').map(c => c.charCodeAt(0)));
+        }
+      } else {
+        photoData = [];
+      }
+
       const membre: Membre = {
         id,
         email,
@@ -111,9 +124,23 @@ export class MembreService {
         username: username,
         telephone: telephone,
         status: status,
-        dateInscription: dateInscription
+        dateInscription: dateInscription,
+        photo: photoData
       };
       return membre;
     }
+  }
+
+  modifierMembre(membre:Membre): Observable<Membre>{
+    return this.http.put<Membre>(`${URL}`,membre ,{ observe: 'response' })
+    .pipe(
+      map(response => {
+        const modifiedMembre: Membre = response.body;
+        if(response.status === 404) {
+          return null;
+        }
+        return modifiedMembre;
+      })
+    );
   }
 }

@@ -7,16 +7,19 @@
   <div style="margin-bottom:4%;" class="accordion"  [attr.id]="'accordionExample'+i"  >
     <div class="accordion-item">
       <h2 class="accordion-header " (click)="toggleAccordion(i)"  id="heading{{i}}">
-        <button class="accordion-button bg-danger " [disabled]="activeIndex !== i && activeIndex!=-1"  (click)="afficherDetailSprintBacklog(sprintBacklog)"  type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
-          SprintBacklog #{{reverseIndex(i,sprintBacklogs.length)}}
+        <button id="sprintBacklog" class="accordion-button" [disabled]="activeIndex !== i && activeIndex!=-1"  (click)="afficherDetailSprintBacklog(sprintBacklog)"  type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse'+i" aria-expanded="true" [attr.aria-controls]="'collapse'+i">
+          <span>
+            <span class="sprintB">Sprint Backlog</span>&nbsp;
+            <span class="numSprintBacklog">{{i+1}}</span>
+          </span>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          Objectif : {{sprintBacklog.sprint.objectif}}
+          <span class="objectifSprint"><i class="fas fa-medal"></i> Objectif sprint : {{sprintBacklog.sprint.objectif}}</span>
         </button>
       </h2>
       <div [attr.id]="'collapse'+i" class="accordion-collapse bg-dark collapse "  aria-labelledby="heading{{i}}" [data-bs-parent]="'#accordionExample'+i">
-        <div class="accordion-body " [ngClass]="{'active': activeIndex === i}" [hidden]="activeIndex !== i" style="margin-top:0px;margin-left:0px;">
+        <div class="accordion-body " id="tableau" [ngClass]="{'active': activeIndex === i}" [hidden]="activeIndex !== i" style="margin-top:0px;margin-left:0px;">
 
 
           <!-- table -->
@@ -25,15 +28,15 @@
             <div class="row">
               <div class="col-lg-4 col-md-4 col-sm-4 hashed-border">
                 <br>
-                <p class="title text-light text-center">Utilisateur histoire</p>
+                <p class="title text-center">Ticket histoire</p>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 hashed-border">
                 <br>
-                <p class="title text-light text-center">Liste des tâches</p>
+                <p class="title text-center">Liste des tâches</p>
               </div>
               <div class="col-lg-2 col-md-2 col-sm-2 hashed-border">
                 <br>
-                <p class="title text-light text-center">Heurs de travail</p>
+                <p class="title text-center">Heures de travail</p>
               </div>
             </div>
             <!-- end header -->
@@ -43,36 +46,36 @@
               <div class="col-lg-4 col-md-4 col-sm-4 hashed-border">
                 <br>
                 <mat-card class="example-card" style="margin-bottom:4%;">
-                  <mat-card-header>
-                    <mat-card-title>{{task.key.titre}}</mat-card-title>
-                    <mat-card-subtitle class="title">Priorite <span class="badge rounded-pill"
-                      [ngClass]="{
-                        'bg-success': task.key.priorite === 'faible',
-                        'bg-warning': task.key.priorite === 'Moyenne',
-                        'bg-danger': task.key.priorite === 'haute'
-                      }"
-                      >{{task.key.priorite}}</span></mat-card-subtitle>
+                  <mat-card-header style="display: flex; align-items: center;">
+                    <mat-card-title style="margin-right: auto;">{{task.key.titre}}</mat-card-title>
+                    <span class="title">
+                      <span style="color:rgb(0, 0, 197)" *ngIf="task.key.priorite === 'Haute'">Haute</span>
+                      <span style="color:rgb(255, 153, 0)" *ngIf="task.key.priorite === 'Moyenne'">Moyenne</span>
+                      <span style="color:rgb(226, 0, 0)" *ngIf="task.key.priorite === 'Faible'">Faible</span>
+                    </span>
                   </mat-card-header>
+
+                  <br>
                   <mat-card-content>
-                    <span class="title">ticket histoire a une velocite de </span> <span class="text-warning"><bold>{{task.key.effort}}</bold></span>
-                    <br>
-                    <span class="title">ticket</span>&nbsp;<span class="badge rounded-pill" [ngClass]="{
+                    <span class="badge rounded-pill" style="width:100%; align-items:center" [ngClass]="{
                       'bg-success': task.key.status === 'TERMINE',
                       'bg-warning': task.key.status === 'EN_ATTENTE',
                       'bg-primary': task.key.status !== 'TERMINE' && task.key.status!== 'EN_ATTENTE'
                     }">{{task.key.status}}</span>
+
                     <div style="border:2px solid rgba(10,220,15,0.6);margin-top:2%;padding:5px;">
                     <span>{{task.key.description}}</span>
                     </div>
+                    <div class="velocite">Vélocité : {{task.key.effort}} points</div>
                   </mat-card-content>
                   <hr>
                   <mat-card-footer>
-                    <div class="d-flex justify-content-evenly">
-                      <div>date fin sprint :</div>
-                      {{task.key.sprint.dateFin|date}}
+                    <div class="d-flex justify-content-between align-items-center">
+                      <div>Date fin du sprint: {{task.key.sprint.dateFin|date}}</div>
                       <mat-icon style="margin-bottom: 1%;" class="text-danger">error</mat-icon>
                     </div>
                   </mat-card-footer>
+
                 </mat-card>
               </div>
               <div class="col-lg-6 col-md-6 col-sm-6 hashed-border">
@@ -82,7 +85,9 @@
                     <mat-card class="example-card" [ngStyle]="getBackgroundColor(i+1)"  style="margin-top:6%;">
                       <mat-card-header>
                         <mat-card-title class="title">
-                          #{{i+1}}&nbsp; - {{ticketTache.titre}}
+                          <span style="text-align:center; font-size:19px">Tâche-{{i+1}}</span>
+                          <br>
+                          <span style="color:rgb(105, 105, 105)">{{ticketTache.titre}}</span>
                           <span class="pull-right"><mat-icon class="text-success" *ngIf="ticketTache.etat=='terminé'">done_all</mat-icon></span>
                         </mat-card-title>
                         <mat-card-subtitle class="title">{{ticketTache.description}}</mat-card-subtitle>
@@ -92,49 +97,49 @@
                         <br>
                       </mat-card-content>
                       <hr>
+
+
+
                       <mat-card-footer>
-                        <div class="d-flex justify-content-around">
-                          <div ><mat-icon>av_timer</mat-icon></div>
-                          <div >{{ticketTache.dateLancement|date}}</div>
-                          <div class="d-flex justify-content-between">
-                            <button mat-icon-button *ngIf="ticketTache.membreId==null" [matMenuTriggerFor]="menu" (click)="prendreTicket(ticketTache.id,task.key)" style="border:1px solidblack;" aria-label="Example icon-button with a menu">
+                        <div class="d-flex justify-content-between">
+                          <div><mat-icon>av_timer</mat-icon></div>
+                          <div>{{ticketTache.dateLancement|date}}</div>
+                          <div>
+                            <button mat-icon-button *ngIf="ticketTache.membreId==null" [matMenuTriggerFor]="menu" (click)="prendreTicket(ticketTache.id,task.key)" style="border:1px solid black;" aria-label="Example icon-button with a menu">
                               <mat-icon>person_add</mat-icon>
                             </button>
-                            <button mat-icon-button *ngIf="ticketTache.membreId!=null" [matMenuTriggerFor]="menu" (click)="verifierPersPris(ticketTache.membre)" style="border:1px solidblack;" aria-label="Example icon-button with a menu">
+                            <button mat-icon-button *ngIf="ticketTache.membreId!=null" [matMenuTriggerFor]="menu" (click)="verifierPersPris(ticketTache.membre)" aria-label="Example icon-button with a menu">
                               <mat-icon>how_to_reg</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="detacher tâche" *ngIf="ticketTache.membreId!=null" [matMenuTriggerFor]="menu" (click)="detacherMembreDeTache(ticketTache)" style="border:1px solidblack;" aria-label="Example icon-button with a menu">
-                              <mat-icon>clear</mat-icon>
+                            <button mat-icon-button matTooltip="Détacher la tâche" *ngIf="ticketTache.membreId!=null" [matMenuTriggerFor]="menu" (click)="detacherMembreDeTache(ticketTache)" aria-label="Example icon-button with a menu">
+                              <mat-icon *ngIf="role == 'dev team'">clear</mat-icon>
                             </button>
                           </div>
                         </div>
                       </mat-card-footer>
+
+
+
                     </mat-card>
                   </div>
 
                   <!-- add card -->
-
-                  <mat-card  mat-button (click)="openAjoutDialog(task.key,sprintBacklog)" class="btn col-lg-5 bg-light col-md-5 light col-sm-5"  style="margin-top:6%;border-top-right-radius:30%;cursor:pointer">
-                    <mat-card-header >
+                  <mat-card *ngIf="role != 'chefProjet'" mat-button (click)="openAjoutDialog(task.key, sprintBacklog)" class="btn col-lg-5 btnPlus col-md-5 light col-sm-5" style="margin-top: 6%; border-top-right-radius: 30%; cursor: pointer">
+                    <mat-card-header>
                       <mat-card-title class="title"><br></mat-card-title>
                       <mat-card-subtitle class="title"></mat-card-subtitle>
                     </mat-card-header>
                     <mat-card-content>
-                      <mat-icon  style="font-size:600%;width:auto;height:auto;margin-left:30%;border-top-right-radius:100px;">note_add</mat-icon>
-
+                      <mat-icon style="font-size: 600%; width: auto; height: auto; margin-left: 30%; border-top-right-radius: 100px;">note_add</mat-icon>
                     </mat-card-content>
-
                     <mat-card-footer>
                       <div class="d-flex bd-highlight mb-1">
-
                         <div class="p-2 bd-highlight"></div>
-                        <div class="ms-auto p-2 bd-highlight">
-
-
-                        </div>
+                        <div class="ms-auto p-2 bd-highlight"></div>
                       </div>
                     </mat-card-footer>
                   </mat-card>
+
                   <!-- end -->
                 </div>
 
@@ -146,15 +151,15 @@
                 <div class="container justify-content-center">
 
               <div class="row my-btn"
-     matTooltip="cliquer ici"
+     matTooltip="Cliquez ici pour gérer la tâche"
      (click)="tt.etat != 'terminé' ? openGestionTache(tt) : null"
      style="margin-bottom: 4%;"
      *ngFor="let tt of task.value; index as i">
 
-  <span style="margin-left:1%;font-size:100%;" class="badge col-lg-12 col-md-12 col-sm-12 w-75 p-3 bg-secondary rounded-pill">
-    <p class="title text-dark">
-      <s *ngIf="tt.etat == 'terminé'">#T{{i+1}}&nbsp;&nbsp;&nbsp;{{tt.nbHeurs}}H de travail</s>
-      <span *ngIf="tt.etat != 'terminé'">#T{{i+1}}&nbsp;&nbsp;&nbsp;{{tt.nbHeurs}}H de travail</span>
+  <span style="margin-left:1%;font-size:100%;background-color:rgb(219, 219, 219); color:black" class="badge col-lg-12 col-md-12 col-sm-12 w-75 p-3 rounded-pill">
+    <p class="title">
+      <s *ngIf="tt.etat == 'terminé'"><div id="T"></div>T{{i+1}}&nbsp;&nbsp;&nbsp;{{tt.nbHeurs}} heure(s)</s>
+      <span *ngIf="tt.etat != 'terminé'">#T{{i+1}}&nbsp;&nbsp;&nbsp;{{tt.nbHeurs}} heure(s)</span>
     </p>
   </span>
 
@@ -167,11 +172,12 @@
           <!-- end -->
         </div>
       </div>
-    </div>
+    </div><br>
+    <button style="margin-top:-1%;background-color:rgb(245, 245, 245)" mat-raised-button (click)="showCourbe=!showCourbe" class="graph">
+      Graphique de répartition des tâches par membre pour chaque ticket histoire
+    </button>
   </div>
-  <button style="margin-top:-1%;" mat-raised-button (click)="showCourbe=!showCourbe" color="accent">Graph</button>
-
     <app-histoire-membre-chart *ngIf="showCourbe" [sprintId]="sprintBacklog.sprintId"></app-histoire-membre-chart>
-
+  <br>
 </ng-container>
 </div>

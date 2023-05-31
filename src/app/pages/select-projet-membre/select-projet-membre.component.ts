@@ -27,9 +27,23 @@ export class SelectProjetMembreComponent implements OnInit {
     this.roleService.afficherListRoleParMembre(this.membreService.getMembreFromToken().id).subscribe(
       data =>{
         this.roles = data.filter(role => this.verifDate(role.invitation.dateExpiration) )
+        console.log(data);
+
         for(let role of data)
           if( role.status == "ACCEPTE")
             this.projets.push(role.projet)
+
+        this.roles = this.roles.filter(role => role.status == "ATTENTE")
+      },
+      error => {
+        console.log(error.status);
+
+        if (error.status == 401)
+          Swal.fire(
+            'Attention',
+            'Vous n\'avez pas une autorisation',
+            'error'
+          )
       }
     )
   }
@@ -61,6 +75,8 @@ export class SelectProjetMembreComponent implements OnInit {
         console.log(data);
         this.roles.splice(this.roles.indexOf(role),1)
         this.toastr.success("vous avez accepté l'invitation")
+        console.log(this.roles.find(role =>( role.pk.membreId == data.pk.membreId )&& (role.pk.projetId == data.pk.projetId)));
+        this.projets.push(this.roles.find(role =>( role.pk.membreId == data.pk.membreId )&& (role.pk.projetId == data.pk.projetId)).projet);
       }
     )
   }

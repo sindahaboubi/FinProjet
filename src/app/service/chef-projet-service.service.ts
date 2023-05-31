@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { ChefProjet } from '../model/chef-projet';
 import jwt_decode from 'jwt-decode';
 import { Role } from '../model/role';
@@ -72,29 +72,21 @@ export class ChefProjetServiceService {
     }
   }
 
-  // getToken() {
-  //   const token = localStorage.getItem('token');
-  //   const decodedToken = this.decodeToken(token);
-  //   const { id, email, nom, prenom, adresse, username, telephone, status, dateInscription } = decodedToken;
 
-  //   const chefProjet: ChefProjet = {
-  //     id:id,
-  //     email:email,
-  //     nom: nom,
-  //     prenom:prenom,
-  //     adresse:adresse,
-  //     username:username,
-  //     telephone:telephone,
-  //     dateInscription:dateInscription
-  //   };
+  modifierChefProjet(chefProjet:ChefProjet): Observable<ChefProjet>{
+    return this.http.put<ChefProjet>(`${url1}`,chefProjet ,{ observe: 'response' })
+    .pipe(
+      map(response => {
+        const modifiedChefProjet: ChefProjet = response.body;
+        if(response.status === 404) {
+          return null;
+        }
+        return modifiedChefProjet;
+      })
+    );
+  }
 
-  //   const roles = this.extractRolesFromToken(decodedToken);
 
-  //   return { chefProjet, roles };
-  // }
 
-  // extractRolesFromToken(decodedToken: any): string[] {
-  //   const roles = decodedToken.roles || [];
-  //   return roles;
-  // }
+
 }

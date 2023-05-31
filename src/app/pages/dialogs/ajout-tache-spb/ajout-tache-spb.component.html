@@ -1,32 +1,33 @@
 <form [formGroup]="this.ticketTacheForm" (ngSubmit)="ajouterTicketTacheAuSpb()" >
-<h1 mat-dialog-title><mat-icon>task</mat-icon> Ajouter Une Ticket Ici </h1>
+<h1 style="text-align:center; background-color:beige" mat-dialog-title><i class="fas fa-plus"></i> Ajouter une tâche</h1>
+<hr>
 <div mat-dialog-content>
-    
-               
+
+
         <mat-form-field class="d-flex">
           <mat-label>Titre</mat-label>
-          <textarea matInput formControlName="titre"  placeholder="Ex. It makes me feel..."></textarea>
+          <textarea matInput formControlName="titre"  placeholder="Ex. Maquette d'interface..."></textarea>
           <mat-error *ngIf="ticketTacheForm.get('titre').hasError('required')">Ce champ est obligatoire</mat-error>
         </mat-form-field>
-      
+
         <mat-form-field class="d-flex">
-          <mat-label>description</mat-label>
-          <textarea matInput formControlName="description"  placeholder="Ex. It makes me feel..."></textarea>
+          <mat-label>Description</mat-label>
+          <textarea matInput formControlName="description"  placeholder="Ex. Maquette d'interface 'Ajouter ticket'..."></textarea>
           <mat-error *ngIf="ticketTacheForm.get('description').hasError('required')">Ce champ est obligatoire</mat-error>
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field style="width:100%">
           <mat-label>Nombre d'heures</mat-label>
           <input type="number" matInput formControlName="nbHeurs">
           <mat-error *ngIf="ticketTacheForm.get('nbHeurs').hasError('required')">Ce champ est obligatoire</mat-error>
         </mat-form-field>
-       
-        
-      
+
+
+
 
 </div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>No</button>
-  <button style="margin-left:3%;" mat-raised-button color="accent"  type="submit" [disabled]="this.ticketTacheForm.invalid">Créer</button>
+<div mat-dialog-actions style="width:100%; text-align:center; display: flex; justify-content: center;">
+  <button mat-button mat-dialog-close style="background-color:rgb(255, 174, 0)">Fermer</button>
+  <button style="margin-left:3%;" mat-raised-button color="accent" type="submit" [disabled]="this.ticketTacheForm.invalid">Ajouter</button>
 </div>
 </form>

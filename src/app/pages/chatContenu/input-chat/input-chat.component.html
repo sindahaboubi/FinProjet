@@ -1,22 +1,22 @@
 <div class="card">
-<form [formGroup]="questionForm">
-    <div class="d-flex flex-row">
-    <textarea type="text"
-     formControlName="text"
-      placeholder="entrer votre question" 
-      style="white-space: pre-wrap; word-wrap: break-word;"
-      class="rounded-pill col-lg-11" ></textarea>
-    <button class="btn rounded" #btn
-    (click)="envoyerQuestion()"
-    matTooltip="poser une Question"
-    [matTooltipDisabled]="btn.disabled"
-     [disabled]="questionForm.invalid">
-        <mat-icon>send</mat-icon>
-    </button>
-    </div>
-    <mat-error 
-    *ngIf="questionForm.get('text').hasError('question') && this.questionForm.get('text').touched && this.questionForm.get('text').dirty" >
-    votre question ne concerne pas des sujets scrum.
-    </mat-error>
-</form>
-</div>
+  <form [formGroup]="questionForm">
+      <div class="d-flex flex-row">
+      <textarea type="text"
+       formControlName="text"
+        placeholder="Tapez votre question ici..."
+        style="white-space: pre-wrap; word-wrap: break-word;"
+        class="rounded-pill col-lg-11" ></textarea>
+      <button class="btn rounded" #btn
+      (click)="envoyerQuestion()"
+      matTooltip="Envoyer"
+      [matTooltipDisabled]="btn.disabled"
+       [disabled]="questionForm.invalid">
+       <i class="fas fa-paper-plane"></i>
+      </button>
+      </div>
+      <mat-error
+      *ngIf="questionForm.get('text').hasError('question') && this.questionForm.get('text').touched && this.questionForm.get('text').dirty" >
+      votre question ne concerne pas des sujets scrum.
+      </mat-error>
+  </form>
+  </div>

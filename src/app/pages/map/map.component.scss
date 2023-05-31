@@ -1,4 +1,11 @@
+#sprintBacklog{
+  background-color: #f0bebe;
+  color:black
+}
 
+.content{
+  margin-top: 2%;
+}
 
 h2 {
   color: #555;
@@ -30,4 +37,69 @@ h2 {
   margin-left:37%;
   color: white;
 }
+
+.numSprintBacklog{
+  display: inline-block;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  border-radius: 50%;
+  background-color: rgb(190, 190, 255);
+  color: rgb(71, 71, 71);
+}
+
+.sprintB{
+  font-weight: bold;
+  color: rgb(82, 82, 82);
+  font-size:18px;
+}
+
+.accordion-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.objectifSprint {
+  color:rgb(54, 54, 54);
+  margin-left: 40%;
+}
+
+
+.graph {
+  width: 100%;
+  text-align: center;
+}
+
+#tableau{
+  background-color:rgb(243, 243, 243);
+}
+
+.title{
+  color:rgb(75, 75, 75);
+  margin-left: auto;
+}
+
+.velocite{
+  color:rgb(0, 0, 160);
+  margin-top:2%;
+  padding:5px;
+  text-align: center;
+  background: linear-gradient(rgb(219, 219, 219), rgb(228, 228, 228));
+}
+
+.mat-card-footer {
+  display: flex;
+}
+
+.btnPlus {
+  background: rgb(75, 75, 75);
+}
+
+.btnPlus:hover {
+  background: rgb(100, 100, 200);
+}
+
+
 

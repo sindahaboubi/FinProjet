@@ -1,11 +1,7 @@
 {
     "angular.enable-strict-mode-prompt": false,
-<<<<<<< HEAD
     "git.ignoreLimitWarning": true,
     "cSpell.words": [
         "Corbeille"
     ]
-=======
-    "git.ignoreLimitWarning": true
->>>>>>> d85500bc95c86368bf414f4758b7d0abfc71550b
 }

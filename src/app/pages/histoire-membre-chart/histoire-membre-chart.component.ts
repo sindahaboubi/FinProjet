@@ -169,7 +169,7 @@ export class HistoireMembreChartComponent implements OnInit   {
               const tacheFiltred = this.taches.filter(t => t.ht.id == value.y && t.membreId == this.listMembre[value.x].id)
               console.log(this.taches);
 
-              return `${memberName} -> nombre de Tâche ${tacheFiltred.length}`;
+              return `${memberName} : nombre de Tâche ${tacheFiltred.length}`;
             }
           }
         },

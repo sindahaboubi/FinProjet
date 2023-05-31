@@ -4,6 +4,7 @@ import { Membre } from 'src/app/model/membre';
 import { Role } from 'src/app/model/role';
 import { RoleService } from 'src/app/service/role.service';
 import * as Chart from 'chart.js';
+import { AuthentificationService } from 'src/app/service/authentification.service';
 
 interface OneMembre{
   membre:Membre
@@ -19,13 +20,16 @@ export class ConsuletMembrePanelComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<ConsuletMembrePanelComponent>,
     private roleService:RoleService,
-    @Inject(MAT_DIALOG_DATA) public data: OneMembre,
+    @Inject(MAT_DIALOG_DATA) public data: OneMembre
   ){}
   roles:Role[]=[]
   rolesPo:Role[]=[]
   rolesDev:Role[]=[]
-  rolesScrumMaster:Role[]=[]
+  rolesScrumMaster:Role[]=[];
+  decodedPhoto:string;
+
   ngOnInit(): void {
+    console.log('membre = ', this.data.membre)
 
     this.roleService.afficherListRoleParMembre(this.data.membre.id).subscribe(
       data => {

@@ -1,0 +1,75 @@
+.logo{
+  text-align: center;
+  text-transform: uppercase;
+  color:white;
+}
+
+.icone-chart-line::before {
+  content: "\f201";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icon-tablet-2::before {
+  content: "\f03a";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icon-tie-bow::before {
+  content: "\f0ea";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icon-pin::before {
+  content: "\f4fe";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icon-video-66::before {
+  content: "\f2d0";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icone-folders::before {
+  content: "\f07b";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icone-comment-alt-smile::before {
+  content: "\f086";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+.icon-world::before {
+  content: "\f161";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  font-size: 1em;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

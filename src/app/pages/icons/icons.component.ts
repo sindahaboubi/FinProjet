@@ -120,7 +120,7 @@ export class IconsComponent implements OnInit {
       if (item.productBacklogId !== null) {
         const dialogRef = this.dialog.open(ConfirmAddUserStoryDialogueComponent, {
           width: '650px',
-          height:'440px',
+          height:'530px',
           data: { item: item },
         });
       }else{
@@ -131,7 +131,8 @@ export class IconsComponent implements OnInit {
           event.container.data,
           event.previousIndex,
           event.currentIndex);
-      }}}
+      }}
+    }
 
   deleteUserStoryById(id: number) {
     const dialogRef = this.dialog.open(ConfirmDialogDeleteUserStoryComponent, {
@@ -171,31 +172,33 @@ export class IconsComponent implements OnInit {
   }
 
 removeUserStoryFromProductBacklog(id: number) {
-  event.stopPropagation();
-  const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-    width: '250px',
-    data: 'Êtes-vous sûr de vouloir supprimer cet élément ?'
-  });
+  if(this.role == 'po'){
+    event.stopPropagation();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: 'Êtes-vous sûr de vouloir supprimer cet élément ?'
+    });
 
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-        this.histoireTicketService.removeUserStoryFromProductBacklog(id)
-        .subscribe(response => {
-        console.log("Ticket histoire supprimé avec succès.");
-      });
-      this.productBacklogService.decreaseProductBacklogVelocity(this.productBacklogService.getProductBacklogByIdFromLocalStorage(), id)
-        .subscribe(response => {
-          console.log("Effort retiré avec succès du backlog produit.");
-        },
-        error => {
-          console.error('Une erreur est survenue :', error);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+          this.histoireTicketService.removeUserStoryFromProductBacklog(id)
+          .subscribe(response => {
+          console.log("Ticket histoire supprimé avec succès.");
         });
-      const index = this.histoireTicketsByProductBacklogId.findIndex(item => item.id === id);
-      if (index !== -1) {
-        this.histoireTicketsByProductBacklogId.splice(index, 1);
+        this.productBacklogService.decreaseProductBacklogVelocity(this.productBacklogService.getProductBacklogByIdFromLocalStorage(), id)
+          .subscribe(response => {
+            console.log("Effort retiré avec succès du backlog produit.");
+          },
+          error => {
+            console.error('Une erreur est survenue :', error);
+          });
+        const index = this.histoireTicketsByProductBacklogId.findIndex(item => item.id === id);
+        if (index !== -1) {
+          this.histoireTicketsByProductBacklogId.splice(index, 1);
+        }
       }
-    }
-  });
+    });
+  }
 }
 
 
@@ -207,8 +210,11 @@ removeUserStoryFromProductBacklog(id: number) {
         data =>{
           this.histoireTicketsSprint = data
           const dialogRef = this.dialog.open(SprintDialogPanelComponent,{
-            width: '500px',
-            height:'600px',
+            width: '560px',
+            height:'500px',
+            position: {
+              top: '90px',
+            },
             data: {sprint:this.sprints[i],
                   TicketHistoires:this.histoireTicketsSprint,
                   canStart :test
@@ -350,7 +356,7 @@ removeUserStoryFromProductBacklog(id: number) {
 
   openDialogCreateSprint() {
     const dialogRef = this.dialog.open(AjouterSprintFormComponent, {
-      width: '500',
+      width: '520',
       height:'400px',
       data: {
 
@@ -360,7 +366,7 @@ removeUserStoryFromProductBacklog(id: number) {
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       if(result)
-        this.sprints.push(result)
+        this?.sprints.push(result)
     });
   }
 
@@ -402,14 +408,20 @@ removeUserStoryFromProductBacklog(id: number) {
     }
 
     openDialogUpdateUserStory(id: number) {
-      const dialogRef = this.dialog.open(UpdateUserStoryDialogComponent, {
-        width: '500px',
-        data: { id: id }
-      });
+      if(this.role != 'po'){
+        const dialogRef = this.dialog.open(UpdateUserStoryDialogComponent, {
+          width: '500px',
+          height:'500px',
+          position: {
+            top: '80px',
+          },
+          data: { id: id }
+        });
 
-      dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
-      });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
+      }
     }
 
 
@@ -443,7 +455,7 @@ removeUserStoryFromProductBacklog(id: number) {
     }else{
       Swal.fire(
         'Attention',
-        'Sprint n\'est pas lancé pour le terminer',
+        'Le sprint n\'est pas lancé, vous ne piuvez pas le terminer !',
         'warning'
       )
     }

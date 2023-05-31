@@ -7,12 +7,14 @@
 
   <mat-form-field class="form-field">
     <mat-label>Date de lancement</mat-label>
-    <input type="text" matInput [matDatepicker]="picker1" formControlName="dateLancement">
+    <input type="text" matInput [matDatepicker]="picker1" formControlName="dateLancement" required>
     <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
     <mat-datepicker #picker1></mat-datepicker>
     <mat-error *ngIf="form?.controls['dateLancement']?.hasError('dateInvalid')"
     class="mat-error">La date doit être supérieure ou égale à la date système</mat-error>
+
   </mat-form-field>
+
 
   <mat-form-field class="form-field">
     <mat-label>Date de fin</mat-label>
@@ -23,9 +25,9 @@
   </mat-form-field>
 
 
-  <div class="button-row">
-    <button mat-raised-button color="primary" type="submit" class="form-button">Enregistrer</button>
+  <span class="button-row">
+    <button mat-raised-button color="primary" type="submit" class="form-button" [disabled]="!form.valid">Enregistrer</button>
     <button mat-raised-button mat-dialog-close class="form-button">Annuler</button>
-  </div>
+  </span>
 
 </form>

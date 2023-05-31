@@ -1,4 +1,35 @@
-h2,h3{
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    color:lightslategray
+.titreProjet {
+  background: linear-gradient(to right,#a8a8a8, #dddddd, #999999);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  text-align: center;
+  text-transform: uppercase;
+  color:black;
 }
+
+.mat-dialog-actions-center {
+  justify-content: center;
+}
+
+.mat-dialog-actions-center button:first-child {
+  background-color:rgb(79, 161, 216);
+}
+
+.mat-dialog-actions-center button:first-child:hover {
+  background-color:rgb(171, 216, 247);
+  color:black;
+}
+
+.mat-dialog-actions-center button:last-child {
+  background-color: rgb(245, 196, 107);
+}
+
+.mat-dialog-actions-center button:last-child:hover {
+  background-color: rgb(240, 205, 140);
+}
+
+
+.roleFormField {
+  width: 100%;
+}
+

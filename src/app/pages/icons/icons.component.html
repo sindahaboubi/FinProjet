@@ -1,47 +1,46 @@
-<div class=" content">
+<div class="content">
   <div class=" row">
     <div class=" col-md-12">
       <div class="card" >
-        <div class=" card-header">
-          <h5 class=" title">ici vous pouvez integrer vos histoire utlisateur</h5>
-          <p class="category">
-            ici vous verrez tout les sprint
-            <a href=""> </a>
+
+        <div class="titrePage">
+          <p class="sprints"><i class="fas fa-clipboard-list"></i> Sprints <span class="description">(Suivez et gérez les sprints de votre projet ici)</span>
           </p>
         </div>
+
         <div class=" card-body " >
           <div class=" row ">
-            <!--sprint-->
-            <div
-              [@slideInSprint]
-               class="m-small sprint font-icon-list col-lg-2 col-md-2 col-sm-2 col-xs-6 col-xs-6"
-              *ngFor="let sp of sprints;index as i"
-              style="cursor: pointer"
-            >
-              <div (click)="openDialogDetailsSprint(i,sp)" class=" font-icon-detail">
-
-                <i class="fas fa-tasks" style="margin-bottom: 3%;"></i>
-                <br>
-                <p style="margin-top:2px;">C'est votre sprint <strong>{{i+1}}</strong></p>
+            <div [@slideInSprint] class="m-small sprint font-icon-list col-lg-2 col-md-2 col-sm-2 col-xs-6 col-xs-6" *ngFor="let sp of sprints; index as i" style="cursor: pointer">
+              <div class="bgGris" (click)="openDialogDetailsSprint(i, sp)">
+                <div class="numSprint">
+                  <h1 class="titre">Sprint {{i+1}}</h1>
+                  <div class="periode">
+                    <span><i class="fas fa-calendar-check"></i></span>
+                    <span>{{sp.dateLancement |date}}</span>
+                    <span>{{sp.dateFin |date}}</span>
+                  </div>
+                </div>
+                <div class="velocite">Vélocité: {{sp.velocite}} pts</div>
               </div>
-              <button class="btn-terminer w-100" *ngIf="sp.etat!='termine' && verifDate(sp)"  (click)="terminerSprint(sp)" style="height:11%;" >Terminer sprint</button>
-              <button class="btn-done w-100" *ngIf="sp.etat=='termine'" matTooltip="sprint terminé" style="height:11%;" disabled><mat-icon>done_outline</mat-icon></button>
-            </div>
-            <!--end-->
-            <!--button pour ajouter sprint-->
-            <div
-              *ngIf="role=='dev team'"
-              [@slideIn]="clickCount"
-              (click)="move()"
-              (click)="openDialogCreateSprint()"
-              style="margin-left:2%;"
-              class="btn-sm btn font-icon-list col-lg-1 col-md-2 col-sm-2 col-xs-6 col-xs-6"
-            >
-              <div class="font-icon-detail-no-cadre">
 
-                <i class="fa fa-plus align-middle" style="margin-top:10%;font-size:50px;"></i>
-              </div>
+              <button class="btn-terminer w-100" *ngIf="sp.etat!='termine' && verifDate(sp)" (click)="terminerSprint(sp)" style="height: 11%;">Terminer sprint</button>
+              <button class="btn-done w-100" *ngIf="sp.etat=='termine'" matTooltip="sprint terminé" style="height: 11%;" disabled><mat-icon>done_outline</mat-icon></button>
+
             </div>
+
+            <div
+            id="btnPlus"
+            *ngIf="role=='dev team'"
+            [@slideIn]="clickCount"
+            (click)="move()"
+            (click)="openDialogCreateSprint()"
+            style="margin-left:2%;"
+            class="btn-sm btn font-icon-list col-lg-1 col-md-2 col-sm-2 col-xs-6 col-xs-6"
+          >
+            <div class="font-icon-detail-no-cadre">
+              <i class="fa fa-plus align-middle plus" style="margin-top:10%;font-size:50px;"></i>
+            </div>
+          </div>
 
           </div>
         </div>
@@ -50,16 +49,16 @@
 
 <div class="row">
           <!--btn list des ticket histoire-->
-          <button *ngIf="role=='po'" class="btn-lg btn-outline-danger ms-auto  bd-highlight" (click)="basculerElement()">
-            <i class="fa fa-list" aria="hiden"></i>Toute la liste
+          <button id="btnListUS" [hidden]="role != 'po'" class="btn-lg btn-outline-danger ms-auto" (click)="basculerElement()">
+            <i class="fa fa-list" aria="hiden"></i>Toute la liste des tickets histoire
           </button>
-<details name="backlog" #detailElement  >
+<details name="backlog" #detailElement>
         <summary>
-          Product Backlog ({{histoireTicketsByProductBacklogId?.length}} tickets)<i class="fa fa-angle-down m-1" aria-hidden="true"></i>
+          Product Backlog ({{histoireTicketsByProductBacklogId?.length}} tickets)
         </summary>
 
     <!-- product backlog -->
-    <div class="example-container">
+    <!-- <div class="example-container">
       <div class="example-list" cdkDropList #list1="cdkDropList"
         [cdkDropListData]="histoireTicketsByProductBacklogId"
         (cdkDropListDropped)="drop($event)">
@@ -91,7 +90,7 @@
 
 
 
-          <i id="btnUpdate" *ngIf="role=='po'"
+          <i id="btnUpdate"
           [disabled]="isSprintInProgress(listHTByPB.sprintId)"
           (click)="openDialogUpdateUserStory(listHTByPB.id)"
           class="fa-solid fa-pen"
@@ -99,12 +98,126 @@
           </i>
 
 
-          <i id="btnDelete" *ngIf="role=='po'"
+          <i id="btnDelete"
           [disabled]="isSprintInProgress(listHTByPB.sprintId)"
           (click)="removeUserStoryFromProductBacklog(listHTByPB.id)"
           class="fa-solid fa-trash"
           [ngStyle]="{'pointer-events': isSprintInProgress(listHTByPB.sprintId) ? 'none' : 'auto'}">
         </i>
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+
+    <!-- <div class="example-container">
+      <div class="example-list" cdkDropList #list1="cdkDropList"
+        [cdkDropListData]="histoireTicketsByProductBacklogId"
+        (cdkDropListDropped)="drop($event)">
+        <div disabled id="element" cdkDrag class="example-box" *ngFor="let listHTByPB of histoireTicketsByProductBacklogId; index as i">
+          <i class="fa-sharp fa-solid fa-clipboard-check"></i>
+          <span class="numTicket" >
+            <s *ngIf="listHTByPB.status=='TERMINE'">Ticket-{{i+1}}</s>
+            <span *ngIf="listHTByPB.status!='TERMINE'">Ticket-{{i+1}}</span>
+          </span>
+          <span>{{listHTByPB.titre}}</span> &nbsp;
+          <span id="priorite">({{listHTByPB.priorite}})</span>
+
+        <select (change)="assignUserStoryToSprint(listHTByPB.id, $event.target.value)"
+          [(ngModel)]="listHTByPB.sprintId" [disabled]="isSprintInProgress(listHTByPB.sprintId)">
+          <option value="" [disabled]="role!='dev team'" [selected]="!listHTByPB.sprintId">-- Sélectionner un sprint --</option>
+          <ng-container *ngFor="let sprint of sprints; index as i">
+              <ng-container *ngIf="sprint.etat !== 'en cours'">
+                  <option [disabled]="role!='dev team'" [value]="sprint.id" [selected]="listHTByPB.sprintId == sprint?.id">
+                      {{'Sprint '+(i+1)}}
+                  </option>
+              </ng-container>
+              <ng-container *ngIf="sprint.etat === 'en cours'">
+                  <option [value]="sprint?.id" [disabled]="true">
+                      {{'Sprint '+(i+1)}} (En cours)
+                  </option>
+              </ng-container>
+          </ng-container>
+        </select>
+
+
+
+          <i id="btnUpdate"
+          [disabled]="isSprintInProgress(listHTByPB.sprintId)"
+          (click)="openDialogUpdateUserStory(listHTByPB.id)"
+          class="fa-solid fa-pen"
+          [ngStyle]="{'pointer-events': isSprintInProgress(listHTByPB.sprintId) ? 'none' : 'auto'}">
+          </i>
+
+
+          <i id="btnDelete"
+          [disabled]="isSprintInProgress(listHTByPB.sprintId)"
+          (click)="removeUserStoryFromProductBacklog(listHTByPB.id)"
+          class="fa-solid fa-trash"
+          [ngStyle]="{'pointer-events': isSprintInProgress(listHTByPB.sprintId) ? 'none' : 'auto'}">
+        </i>
+        </div>
+      </div>
+    </div> -->
+
+
+
+
+    <div class="example-container">
+      <div class="example-list" cdkDropList #list1="cdkDropList" id="productBacklog"
+        [cdkDropListData]="histoireTicketsByProductBacklogId"
+        (cdkDropListDropped)="drop($event)">
+        <div disabled id="element" cdkDrag class="example-box" *ngFor="let listHTByPB of histoireTicketsByProductBacklogId; index as i">
+
+          <div>
+            <i class="fa-sharp fa-solid fa-clipboard-check"></i>
+            <span class="numTicket" >
+              <s *ngIf="listHTByPB.status=='TERMINE'">Ticket-{{i+1}}</s>
+              <span *ngIf="listHTByPB.status!='TERMINE'">Ticket-{{i+1}}</span>
+            </span>
+            <span>{{listHTByPB.titre}}</span> &nbsp;
+          </div>
+
+        <div class="boutons">
+          <span class="haute" *ngIf="listHTByPB.priorite=='Haute'">Haute</span>
+          <span class="moyenne" *ngIf="listHTByPB.priorite=='Moyenne'">Moyenne</span>
+          <span class="faible" *ngIf="listHTByPB.priorite=='Faible'">Faible</span>
+
+          <select class="listeSelectSprints" (change)="assignUserStoryToSprint(listHTByPB.id, $event.target.value)"
+          [(ngModel)]="listHTByPB.sprintId" [disabled]="isSprintInProgress(listHTByPB.sprintId)">
+          <option value="" [disabled]="role!='dev team'" [selected]="!listHTByPB.sprintId">-- Sélectionner un sprint --</option>
+          <ng-container *ngFor="let sprint of sprints; index as i">
+              <ng-container *ngIf="sprint.etat !== 'en cours'">
+                  <option [disabled]="role!='dev team'" [value]="sprint.id" [selected]="listHTByPB.sprintId == sprint?.id">
+                      {{'Sprint '+(i+1)}}
+                  </option>
+              </ng-container>
+              <ng-container *ngIf="sprint.etat === 'en cours'">
+                  <option [value]="sprint?.id" [disabled]="true">
+                      {{'Sprint '+(i+1)}} (En cours)
+                  </option>
+              </ng-container>
+          </ng-container>
+          </select>&nbsp;
+
+
+            <i id="btnUpdate"
+            [disabled]="isSprintInProgress(listHTByPB.sprintId)"
+            (click)="openDialogUpdateUserStory(listHTByPB.id)"
+            class="fa-solid fa-pen"
+            [ngStyle]="{'pointer-events': isSprintInProgress(listHTByPB.sprintId) ? 'none' : 'auto'}">
+            </i>&nbsp;
+
+            <i id="btnDelete"
+            [disabled]="isSprintInProgress(listHTByPB.sprintId)"
+            (click)="removeUserStoryFromProductBacklog(listHTByPB.id)"
+            class="fa-solid fa-trash"
+            [ngStyle]="{'pointer-events': isSprintInProgress(listHTByPB.sprintId) ? 'none' : 'auto'}">
+          </i>
+        </div>
+
         </div>
       </div>
     </div>
@@ -121,7 +234,8 @@
         <mat-icon class="plus">+</mat-icon>
       </button>
     </div>
-    <h3>Liste des tickets</h3>
+
+    <h3></h3><br>
     <div id="list" class="example-list" cdkDropList #list2="cdkDropList"
       [cdkDropListData]="histoireTicketsByMembreId" [cdkDropListConnectedTo]="[list1]" (cdkDropListDropped)="drop($event)">
 

@@ -25,7 +25,7 @@ export class RoleService {
         //   //   this.roles.push(message.subscribe)
         // }
 
-        if (message.subscribe && this.getMembreFromToken().id == message.subscribe.pk.membreId){
+        if (message.subscribe && this.getMembreFromToken(sessionStorage.getItem('token')).id == message.subscribe.pk.membreId){
           this.roles.push(message.subscribe);
         }
       }
@@ -127,23 +127,37 @@ export class RoleService {
     return decodedToken;
   }
 
-  getMembreFromToken(){
-    const token = localStorage.getItem('token');
-    const decodedToken = this.decodeToken(token);
-    const { id, email, nom, prenom, adresse, username, telephone, status, dateInscription } = decodedToken;
 
-    const membre: Membre = {
-      id,
-      email,
-      nom: nom,
-      prenom:prenom,
-      adresse:adresse,
-      username:username,
-      telephone:telephone,
-      status:status,
-      dateInscription:dateInscription
-    };
-    return membre;
+  getMembreFromToken(token: string) {
+    const decodedToken = this.decodeToken(token);
+      const { id, email, nom, prenom, adresse, username, telephone, dateInscription, pwd, status, photo } = decodedToken;
+
+      let photoData: Uint8Array | Array<Uint8Array>;
+
+      if (photo) {
+        if (Array.isArray(photo)) {
+          photoData = photo.map(p => new Uint8Array(atob(p).split('').map(c => c.charCodeAt(0))));
+        } else {
+          photoData = new Uint8Array(atob(photo).split('').map(c => c.charCodeAt(0)));
+        }
+      } else {
+        photoData = [];
+      }
+
+      const membre: Membre = {
+        id,
+        email,
+        nom: nom,
+        prenom: prenom,
+        adresse: adresse,
+        username: username,
+        telephone: telephone,
+        status: status,
+        dateInscription: new Date(dateInscription),
+        pwd:pwd,
+        photo: photoData
+      };
+      return membre;
   }
 
 

@@ -47,12 +47,15 @@ export class SearchPanelComponent implements OnInit {
 
   chercherMembre(){
     if(this.chercher.valid){
-      console.log(this.chercher.value);
+      console.log('test = ',this.chercher.value);
       const membre = this.data.membres.find(membre => membre.email == this.chercher.value)
       if(membre){
         this.consulterMembre.open(ConsuletMembrePanelComponent,{
           width: '80%',
           height:'80%',
+          position: {
+            top: '95px',
+          },
           data: {
             membre:membre
           }

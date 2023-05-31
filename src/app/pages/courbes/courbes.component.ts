@@ -11,6 +11,7 @@ import { SprintService } from 'src/app/service/sprint.service';
 import { TicketTacheService } from 'src/app/service/ticket-tache.service';
 import { Chart } from 'chart.js';
 import { HttpClient } from '@angular/common/http';
+import { Projet } from 'src/app/model/projet';
 
 @Component({
   selector: 'app-courbes',
@@ -28,10 +29,12 @@ export class CourbesComponent implements OnInit {
     private projetService:ProjetServiceService) { }
 
   sprints: Sprint[] = [];
+  projet:Projet;
   dateDebutProjet:Date=new Date(this.projetService.getProjetFromLocalStorage().dateDebut);
   dateFinProjet:Date=this.projetService.getProjetFromLocalStorage().dateFin;
 
   ngOnInit(): void {
+    this.projet =JSON.parse(localStorage.getItem("projet"));
     this.sprintService.getListSprintsByProductBacklog(this.productBacklogService.getProductBacklogByIdFromLocalStorage()) // appel du service en utilisant l'id du product backlog
       .subscribe((data: Sprint[]) => {
         this.sprints = data;

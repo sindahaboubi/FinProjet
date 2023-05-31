@@ -1,13 +1,13 @@
-<h2 mat-dialog-title>Profile :{{data.membre.nom}} {{data.membre.prenom}}</h2>
+<h2 mat-dialog-title>Profil : {{data.membre.nom}} {{data.membre.prenom}}</h2>
 <mat-dialog-content class="content" style="height:80%;max-height: 80%;">
-     
+
     <div class="row mb-3">
 
         <mat-card class="col-lg-7 col-md-7 col-sm-7 col-xs-7" >
-            
+
             <mat-card-content class="content">
                 <div class="row">
-                    <img src="../../../../assets/img/emilyz.jpg"  class="col-lg-6 col-sm-6 col-md-6 col-xs-6 rounded w-75 h-100"   alt="face"/>
+                  <img class="col-lg-6 col-sm-6 col-md-6 col-xs-6 rounded w-75 h-100" src="data:application/octet-stream;base64,{{ data.membre.photo }}">
                     <mat-list role="list" class="col-lg-6 col-sm-6 col-md-6 col-xs-6 mt-2">
                         <mat-list-item role="listitem">
                             <div class="d-flex justify-content-between">
@@ -22,7 +22,7 @@
                         <mat-list-item role="listitem">
                             <div class="d-flex justify-content-between">
                                 <span style="color:rgba(0,0,0,0.3);display:flex">
-                                    <mat-icon>face</mat-icon> nom 
+                                    <mat-icon>face</mat-icon> nom
                                 </span>
                                 <span class="text-warning">
                                      {{data.membre.nom}}
@@ -75,7 +75,7 @@
 
 
     </div>
-    
+
     <div class="row">
         <mat-card class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <mat-card-content class="content">
@@ -99,7 +99,7 @@
                         <mat-list-item role="listitem">
                             <div class="d-flex justify-content-between">
                                 <span style="color:rgba(0,0,0,0.3);display:flex">
-                                    <mat-icon> phone</mat-icon> telephone 
+                                    <mat-icon> phone</mat-icon> telephone
                                 </span>
                                 <span class="text-warning">
                                      {{data.membre.telephone}}
@@ -146,9 +146,15 @@
                     </div>
                 </div>
                 <!-- end -->
-            </div>
-            </mat-card-content>
-          </mat-card>
+            </div><br>
+            </mat-card-content><br>
+          </mat-card><br><br>
+          <button style="background-color:rgb(255, 248, 207);
+color:black;
+margin-left:45%;
+width:15%;
+padding:5px;
+border:0px solid transparent" mat-dialog-close>Fermer</button>
+
     </div>
 </mat-dialog-content>
-<button mat-button mat-dialog-close>Cancel</button>

@@ -10,35 +10,35 @@
   ::-webkit-scrollbar {
     width: 5px;
   }
-  
+
   /* Poignée de la barre de défilement */
   ::-webkit-scrollbar-thumb {
     background-color: #969696;
     border-radius: 5px;
     border: 2px solid #fff;
   }
-  
+
   /* Arrière-plan de la barre de défilement */
   ::-webkit-scrollbar-track {
     background-color: #413fc5;
   }
-  
+
   /* Poignée de la barre de défilement au survol */
   ::-webkit-scrollbar-thumb:hover {
     background-color: #bbb;
   }
-  
+
   /* Poignée de la barre de défilement lorsqu'elle est active */
   ::-webkit-scrollbar-thumb:active {
     background-color: #999;
   }
 
- 
+
   .projet:hover{
     cursor: pointer;
     opacity: 0.5;
     transition: all ;
-   
+
   }
 
   .mat-mdc-radio-button ~ .mat-mdc-radio-button {
@@ -51,21 +51,21 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   mat-form-field {
     width: 100%;
     margin-bottom: 20px;
   }
-  
+
   textarea[matInput] {
     height: 150px;
   }
-  
+
   button[type="submit"],
   button[type="button"] {
     margin-top: 20px;
   }
-  
+
   mat-form-field + mat-form-field {
     margin-left: 20px;
   }
@@ -83,7 +83,7 @@
     align-items: center;
   }
 
- 
+
   .scrollable-cell {
     max-width:  100%;
     white-space: nowrap;
@@ -93,4 +93,36 @@
   .example-full-width {
     width: 100%;
   }
-  
+
+  .content{
+    margin-top: 8%;
+  }
+
+  #page {
+    margin-top: 5%;
+    background-color: rgb(214, 214, 214);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .nomProjet{
+    color:black;
+  }
+
+  #dateProjet{
+    color:rgb(75, 73, 73);
+    margin-top: 1%;
+  }
+
+  .role{
+    color:rgb(131, 0, 0);
+    font-weight: bold;
+  }
+
+  .btnAccepter{
+    margin-right:1%;
+  }
+
+  .titreProjet{
+    font-weight:bold;
+    color:r
+  }

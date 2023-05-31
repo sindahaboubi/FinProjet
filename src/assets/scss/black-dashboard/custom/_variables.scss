@@ -103,7 +103,7 @@ $secondary:     #f4f5f7 !default;
 $success:       #00f2c3 !default;
 $info:          #1d8cf8 !default;
 $warning:       #ff8d72 !default;
-$danger:        #fd5d93 !default;
+$danger:        #3c3f41 !default; //sidebar
 $black:         #222a42 !default;
 
 
@@ -113,7 +113,7 @@ $primary-states:       #ba54f5 !default;
 $success-states:       #0098f0 !default;
 $info-states:          #3358f4 !default;
 $warning-states:       #ff6491 !default;
-$danger-states:        #ec250d !default;
+$danger-states:        #4a4c4d !default; //sidebar
 $black-states:         #4769c7 !default;
 
 $background-black:           #e6e6e6 !default;
@@ -157,7 +157,7 @@ $pinterest:             #cc2127 !default;
 $pinterest-states:      lighten($pinterest, 6%) !default;
 $youtube:               #e52d27 !default;
 $youtube-states:        lighten($youtube, 6%) !default;
-$dribbble:              #ea4c89 !default;
+$dribbble:              #c2a1ae !default;
 $dribbble-states:       lighten($dribbble, 6%) !default;
 $github:                #333333 !default;
 $github-states:         #ccc !default;

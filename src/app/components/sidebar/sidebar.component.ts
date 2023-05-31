@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Projet } from "src/app/model/projet";
 import { SprintService } from "src/app/service/sprint.service";
 
 declare interface RouteInfo {
@@ -14,7 +15,7 @@ export const ROUTES: RouteInfo[] = [
     path: "/dashboard",
     title: "Dashboard",
     rtlTitle: "لوحة القيادة",
-    icon: "icon-chart-pie-36",
+    icon: "icone-chart-line",
     class: ""
   },
   {
@@ -31,18 +32,12 @@ export const ROUTES: RouteInfo[] = [
     icon: "icon-tie-bow",
     class: "" ,
   },
+
+
   {
     path: "/scrumBoard",
     title: "scrum board",
     rtlTitle: "لوحة السكروم",
-    icon: "icon-pin",
-    class: ""
-  },
-
-  {
-    path: "/visioConference",
-    title: "visio conférence",
-    rtlTitle: "مؤتمر عبر الفيديو",
     icon: "icon-video-66",
     class: ""
   },
@@ -50,14 +45,14 @@ export const ROUTES: RouteInfo[] = [
     path: "/dossiers",
     title: "liste des ressources",
     rtlTitle: "الموارد المشترك ",
-    icon: "icon-puzzle-10",
+    icon: "icone-folders",
     class: ""
   },
   {
     path: "/chat-bot",
     title: "Scrum teacher",
     rtlTitle: "طباعة",
-    icon: "icon-align-center",
+    icon: "icone-comment-alt-smile",
     class: ""
   },
   {
@@ -83,13 +78,16 @@ export const ROUTES: RouteInfo[] = [
 })
 export class SidebarComponent implements OnInit {
   menuItems: any[];
+  projet:Projet;
 
   constructor(
     private sprintService: SprintService
   ) {}
 
-  sprintLancee:number
+  sprintLancee:number;
+
   ngOnInit() {
+    this.projet =JSON.parse(localStorage.getItem("projet"));
     this.sprintService.getListSprintsByProductBacklog(JSON.parse(localStorage.getItem('productBacklogCourant')).id)
     .subscribe(
       data => {

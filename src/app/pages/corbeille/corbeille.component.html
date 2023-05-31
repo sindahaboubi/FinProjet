@@ -1,25 +1,26 @@
 <div class="content">
   <div class=" row">
+    <p class="corbeille"><i class="fas fa-trash-alt" style="color:rgb(216, 16, 16)"></i> Corbeille des tâches</p>
     <div class=" col-md-12 d-flex bd-highlight">
-      <mat-form-field class="p-2 flex-grow-1 bd-highlight" appearance="fill">
-        <mat-label>Fill form field</mat-label>
-        <input matInput [formControl]="chercher" placeholder="Placeholder">
+      <mat-form-field id="input" class="p-2 flex-grow-1 bd-highlight" appearance="fill">
+        <mat-label>Chercher  tâche</mat-label>
+        <input matInput [formControl]="chercher" placeholder="Ecrire ici...">
         <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
       </mat-form-field>
       <button matTooltip="vider corbeille" (click)="viderCorbeille()" class="rounded p-2 bd-highlight" mat-fab
         color="warn">
-        <mat-icon>delete_outline</mat-icon>
+        Vider
       </button>
     </div>
   </div>
   <div class="card">
-    <div class="card-header">
+    <div id="premierePartie" class="card-header">
       <h4 class=" card-title">
         Votre Corbeille
       </h4>
-      <p class=" category">vous trouverez ici tous vos tache supprimer dans ce projet</p>
+      <p class=" category">Vous trouverez ici toutes les tâches supprimées du projet</p>
     </div>
-    <div *ngIf="chercher.value ==''" class="card-body">
+    <div *ngIf="chercher.value ==''" class="card-body" id="deuxiemePartie">
       <div class="row" *ngFor="let tache of tacheSprintMap | keyvalue;index as i">
         <h2>Sprint {{i+1}} </h2>
         <ng-container >

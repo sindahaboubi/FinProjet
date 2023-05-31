@@ -1,22 +1,23 @@
+<app-navbar></app-navbar>
 <div class="content">
-    <div class="card col-lg-6 mx-auto" style="margin-top:5%;">
+  <div class="card col-lg-6 mx-auto" id="page">
         <div class="card-body">
             <mat-tab-group>
-                <mat-tab label="Projets"> 
+                <mat-tab label="Projets">
                     <mat-list class="my-list">
-                    <mat-list-item class="projet" 
+                    <mat-list-item class="projet"
                     *ngFor="let projet of projets;index as i">
-                    <mat-icon matListItemIcon style="color:rgb(238, 238, 238)">folder</mat-icon>
+                    <mat-icon matListItemIcon style="color:rgb(233, 157, 15)">folder</mat-icon>
                     <div matListItemTitle style="color:rgb(238, 238, 238)">
-                        {{projet.nom}}
+                        <span class="nomProjet">{{projet.nom}}</span>
                         <button mat-mini-fab color="warn" class="pull-right" (click)="gerer(i)"
                             aria-label="Example icon button with a filter list icon">
                             <mat-icon>settings</mat-icon>
                         </button>
                     </div>
 
-                    <div matListItemLine class="d-flex" style="color:rgb(238, 238, 238)">
-                        {{projet.dateDebut | date}}
+                    <div matListItemLine class="d-flex" id="dateProjet">
+                        De {{projet.dateDebut | date}} à {{projet.dateFin | date}}
 
                     </div>
 
@@ -24,23 +25,23 @@
                 </mat-list-item>
                 </mat-list>
                 </mat-tab>
-                <mat-tab label="Invitations"> 
+                <mat-tab label="Invitations">
                      <ul class=" dropdown-menu-right dropdown-navbar" >
             <li class=" nav-link" *ngFor="let role of roles">
-              <div >
-                vous Êtes inviter à rejoindre le projet
-                <span class="text-primary">{{role.projet.nom}}</span> 
+              <div style="text-align:center; color:rgb(68, 68, 68)">
+                Vous êtes invité à rejoindre le projet
+                <span class="titreProjet">{{role.projet.nom}}</span>
               </div>
-              <div>
-                vous aurez le role 
-                <span class="text-primary" *ngIf="role.type == 'dev team'">equipe de developpement</span>
-                <span class="text-primary" *ngIf="role.type == 'scrum master'">Scrum master</span> 
-                <span class="text-primary" *ngIf="role.type == 'po'">Product owner</span>  
+              <div style="text-align:center; color:rgb(68, 68, 68)">
+                En tant qu'un
+                <span class="role" *ngIf="role.type == 'dev team'">Membre de développement</span>
+                <span class="role" *ngIf="role.type == 'scrum master'">Scrum master</span>
+                <span class="role" *ngIf="role.type == 'po'">Product owner</span>
               </div>
               <br>
               <div class="d-flex justify-content-center">
-                <button mat-raised-button class="h-25 w-25" (click)="accepter(role)" style="margin-right:1%;" color="primary">Accepter</button>
-                <button mat-raised-button class="h-25 w-25" (click)="refuser(role)" color="accent">Refuser</button>
+                <button mat-raised-button class="h-25 w-25" (click)="accepter(role)" id="btnAccepter" color="primary">Accepter</button>
+                <button mat-raised-button class="h-25 w-25" (click)="refuser(role)" id="btnRefuser" color="warn">Refuser</button>
               </div>
               <hr>
             </li>

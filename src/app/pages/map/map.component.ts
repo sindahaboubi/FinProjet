@@ -19,6 +19,8 @@ import { AjoutTacheSpbComponent } from "../dialogs/ajout-tache-spb/ajout-tache-s
 import { GestionTacheDialogComponent } from "../dialogs/gestion-tache-dialog/gestion-tache-dialog.component";
 import Swal from "sweetalert2";
 import { WebSocketTicketTacheService } from "src/app/service/web-socket-ticket-tache.service";
+import { AuthentificationService } from "src/app/service/authentification.service";
+import { ProjetServiceService } from "src/app/service/projet-service.service";
 
 
 export interface DialogDataTicketTache {
@@ -51,7 +53,9 @@ export class MapComponent implements OnInit {
     private roleService: RoleService,
     private toastr: ToastrService,
     private dialogGestion: MatDialog,
-    private webSocketService: WebSocketTicketTacheService
+    private webSocketService: WebSocketTicketTacheService,
+    private authentificationService:AuthentificationService,
+    private projetService:ProjetServiceService
   ) {
     this.webSocketService.messageHandlingAdd(new TacheTicket()).subscribe(
       message => {
@@ -123,8 +127,19 @@ export class MapComponent implements OnInit {
   endDate: Date = new Date('2023-03-31T23:59:59');
   roles: Role[];
   dateFin:Date;
+  role:string;
 
   ngOnInit() {
+
+    if(this.authentificationService.getUserRolesToken(sessionStorage.getItem('token')).roles.includes('chefProjet')){
+      this.role='chefProjet';
+    }else{
+      const roleToken = this.authentificationService.getUserRolesToken(sessionStorage.getItem('token')).roles as Role[]
+      this.role = roleToken.find(role =>
+         role.pk.membreId == this.membreService.getMembreFromToken().id
+         && role.pk.projetId == this.projetService.getProjetFromLocalStorage().id).type
+    }
+
     const projet: Projet = JSON.parse(localStorage.getItem('projet'))
     this.roleService.afficherListRoleParProjet(projet.id).subscribe(
       data => {
@@ -272,7 +287,10 @@ export class MapComponent implements OnInit {
   openAjoutDialog(ht: TicketHistoire, sprintBacklog: SprintBacklog) {
     const dialogRef = this.dialogAjout.open(AjoutTacheSpbComponent, {
       width: '350px',
-      height: '550px',
+      height: '470px',
+      position: {
+        top: '90px',
+      },
       data: {
         sprintBacklog: sprintBacklog,
         ticketHistoire: ht
@@ -336,6 +354,7 @@ export class MapComponent implements OnInit {
 
 
   openGestionTache(tt: TacheTicket) {
+    if(this.role == 'dev team'){
 
     const dialogRef = this.dialogGestion.open(GestionTacheDialogComponent, {
       width: '650px',
@@ -420,6 +439,7 @@ export class MapComponent implements OnInit {
           }
 
     });
+    }
   }
 
 
@@ -430,11 +450,15 @@ export class MapComponent implements OnInit {
 
 
   verifierPersPris(membre: Membre) {
-    const prendre = "cette ticket est pris par "
-    if (this.membreService.getMembreFromToken().id == membre.id)
-      this.toastr.success(`${prendre} Vous 	😀`);
-    else
+    const prendre = "Cette tâche est prise par "
+    if(this.role == 'chefProjet'){
       this.toastr.success(`${prendre} ${membre.email}`);
+    }else{
+      if (this.membreService.getMembreFromToken().id == membre.id)
+        this.toastr.success(`${prendre} Vous 	😀`);
+      else
+        this.toastr.success(`${prendre} ${membre.email}`);
+    }
   }
 
 

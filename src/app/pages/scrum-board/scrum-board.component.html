@@ -1,15 +1,15 @@
 <div class="content">
-
   <div class="d-flex align-items-stretch">
-    <select class="form-select custom-select" [(ngModel)]="selectedSprintId" (change)="getTicketsTacheBySprint($event.target.value)">
+    <select class="form-select custom-select select-blue" [(ngModel)]="selectedSprintId" (change)="getTicketsTacheBySprint($event.target.value)">
       <option value="">-- Sélectionner un sprint --</option>
       <option *ngFor="let sprint of sprints; index as i" [value]="sprint.id" [selected]="sprint.etat === 'en cours'">
         {{ 'Sprint ' + (i+1) }} {{ sprint.etat }}
       </option>
     </select>
+
     <div class="input-group ms-3">
-      <input type="text" class="form-control" placeholder="Recherche par mail" [disabled]="!selectedSprintId" [(ngModel)]="searchMember" (input)="filterTicketsTache()">
-      <span class="input-group-text">
+      <input type="text" id="inputSearch" class="form-control" placeholder="Chercher tâche par mail, nom ou prénom" [disabled]="!selectedSprintId" [(ngModel)]="searchMember" (input)="filterTicketsTache()">
+      <span id="btnSearch" class="input-group-text">
         <i class="fas fa-search"></i>
       </span>
     </div>

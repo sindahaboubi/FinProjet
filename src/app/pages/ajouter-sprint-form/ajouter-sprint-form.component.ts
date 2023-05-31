@@ -45,7 +45,7 @@ export class AjouterSprintFormComponent {
             this.form = this.fb.group({
               objectif: ['', Validators.required],
               dateLancement: ['', this.dateSystemValidator()],
-              dateFin: ['', this.validateDateFin.bind(this)]
+              dateFin: ['', this.validateDateFin.bind(this), Validators.required]
             });
           }
       }
@@ -73,7 +73,7 @@ export class AjouterSprintFormComponent {
       return;
     }
     if (sprint.dateLancement < dateDebProjet || sprint.dateFin > dateFinProjet) {
-      this.toastr.error('Le sprint ne se trouve pas dans la période du projet');
+      this.toastr.error('Veuillez ajouter un sprint dans la période de votre projet !');
       return;
     }
     if (this.sprints.length === 0) {
@@ -85,7 +85,7 @@ export class AjouterSprintFormComponent {
       const diffTime = Math.abs(sprint.dateFin.getTime() - sprint.dateLancement.getTime());
       const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
       if (diffDays !== parseInt(storedDuration)) {
-        this.toastr.error('La durée du sprint est différente de la durée enregistrée dans le localStorage.');
+        this.toastr.error('Les sprints doivent être de méme période !');
         return;
       }
     }

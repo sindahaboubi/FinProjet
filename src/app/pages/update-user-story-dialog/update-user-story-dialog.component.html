@@ -1,35 +1,46 @@
 <h2 mat-dialog-title>Modifier le ticket histoire</h2>
 <div mat-dialog-content>
   <form #updateTicketHistoireForm="ngForm" >
-    <mat-form-field>
+
+    <mat-form-field class="element" style="width: 50%;">
+      <mat-label>Titre</mat-label>
       <input matInput name="titre" [(ngModel)]="ticketHistoire.titre" required placeholder="Titre">
     </mat-form-field>
-    <mat-form-field>
-      <textarea matInput name="description" [(ngModel)]="ticketHistoire.description" required placeholder="Description"></textarea>
-    </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field class="element" style="width: 50%;">
       <mat-label>Priorité</mat-label>
       <mat-select name="priorite" [(ngModel)]="ticketHistoire.priorite" required>
         <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>
       </mat-select>
     </mat-form-field>
 
+    <mat-form-field class="element">
+      <mat-label>Description</mat-label>
+      <textarea matInput name="description" [(ngModel)]="ticketHistoire.description" required placeholder="Description"></textarea>
+    </mat-form-field>
 
-    <mat-form-field>
+
+    <mat-form-field class="element">
       <mat-label>Effort</mat-label>
       <mat-select [(ngModel)]="ticketHistoire.effort" name="effort">
         <mat-option *ngFor="let num of efforts" [value]="num">{{ num }}</mat-option>
       </mat-select>
     </mat-form-field>
 
-    <select (change)="assignUserStoryToSprint(ticketHistoire.id, $event.target.value)" [(ngModel)]="ticketHistoire.sprintId">
-      <option *ngFor="let sprint of sprints; index as i" [value]="sprint.id" [selected]="ticketHistoire.sprintId == sprint.id">{{'Sprint '+(i+1)}} </option>
-    </select>
+    <mat-form-field class="element">
+      <mat-label>Sprint</mat-label>
+
+      <mat-select (change)="assignUserStoryToSprint(ticketHistoire.id, $event.target.value)" [(ngModel)]="ticketHistoire.sprintId">
+        <mat-option *ngFor="let sprint of sprints; index as i" [value]="sprint.id" [selected]="ticketHistoire.sprintId == sprint.id">{{'Sprint '+(i+1)}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
   </form>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Annuler</button>
-  <button mat-button color="primary" [disabled]="!updateTicketHistoireForm.valid" (click)="updateUserStory()">Enregistrer</button>
+
+<div mat-dialog-actions style="display: flex; justify-content: center">
+  <button mat-button style="color:white" id="btnSave" [disabled]="!updateTicketHistoireForm.valid" (click)="updateUserStory()">Enregistrer</button>
 </div>
+
+
 

@@ -7,6 +7,10 @@ import { TicketTacheService } from 'src/app/service/ticket-tache.service';
 import {Chart} from 'chart.js';
 import { MatDialog } from '@angular/material/dialog';
 import { PerformanceCourbeComponent } from '../dialogs/performance-courbe/performance-courbe.component';
+import { AuthentificationService } from 'src/app/service/authentification.service';
+import { MembreService } from 'src/app/service/membre.service';
+import { ProjetServiceService } from 'src/app/service/projet-service.service';
+import { ChefProjet } from 'src/app/model/chef-projet';
 
 
 export interface PerformanceData{
@@ -50,10 +54,50 @@ export class ListMembreProjetComponent implements OnInit{
   constructor(
     private roleService:RoleService,
     private ticketTacheService:TicketTacheService,
-    private performanceDialog:MatDialog
+    private performanceDialog:MatDialog,
+    private authentificationService:AuthentificationService,
+    private membreService:MembreService,
+    private projetService:ProjetServiceService
   ){}
 
+  role:string;
+  chefProjet:ChefProjet;
+  membre:Membre;
+
+  decodeImage(values: string): string {
+    const byteValues = values.split(',').map(Number);
+    const byteArray = new Uint8Array(byteValues);
+
+    const base64String = btoa(String.fromCharCode.apply(null, byteArray));
+    const imageSource = 'data:image/png;base64,' + base64String;
+
+    return imageSource;
+  }
+
+  decodedImage: string;
+
   ngOnInit(): void {
+    const { chefProjet, membre, roles } = this.authentificationService.getUserRolesToken(sessionStorage.getItem('token'));
+    if (roles.includes('chefProjet')) {
+      this.chefProjet = chefProjet;
+    } else {
+      this.membre = membre;
+      console.log("Le membre = ", this.membre);
+
+      this.decodedImage = this.decodeImage(this.membre.photo.toString());
+      console.log(this.decodeImage)
+
+    }
+        if(this.authentificationService.getUserRolesToken(sessionStorage.getItem('token')).roles.includes('chefProjet')){
+      this.role='chefProjet';
+    }else{
+      const roleToken = this.authentificationService.getUserRolesToken(sessionStorage.getItem('token')).roles as Role[]
+      this.role = roleToken.find(role =>
+         role.pk.membreId == this.membreService.getMembreFromToken().id
+         && role.pk.projetId == this.projetService.getProjetFromLocalStorage().id).type
+         console.log("wellllllltedd+",this.role);
+    }
+
     const projet = JSON.parse(localStorage.getItem('projet'))
     this.roleService.afficherListRoleParProjet(projet.id).subscribe(
       dataRoles => {

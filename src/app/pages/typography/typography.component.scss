@@ -11,3 +11,33 @@
     max-height: 15%;
     overflow-y: auto;
 }
+
+.content{
+  margin-top:2%
+}
+
+.chatBot{
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+
+.titrePage{
+  width: 100%;
+  position: relative;
+}
+
+.scrumTeacher{
+  font-size: 26px;
+  color: rgb(255, 128, 128);
+  font-weight: bold;
+}
+
+.points {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+  font-size: 40px;
+  color:rgb(0, 0, 75);
+}

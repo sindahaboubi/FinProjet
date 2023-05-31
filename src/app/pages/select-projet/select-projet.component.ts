@@ -101,6 +101,11 @@ export class SelectProjetComponent implements OnInit {
       cles: ['', Validators.required],
       chefProjetId:this.chefProjetService.getChefProjetFromToken().id
     });
+
+    this.projetForm.controls['nom'].valueChanges.subscribe((value: string) => {
+      this.projetForm.controls['cles'].setValue(this.generateCles(value));
+    });
+
     /*   liste des projet d'un chef de projet   */
     this.projetService.getListProjetChefProjet(this.chefProjetService.getChefProjetFromToken().id).subscribe(
       data => {
@@ -138,6 +143,12 @@ export class SelectProjetComponent implements OnInit {
 
   }
 
+  generateCles(nom: string): string {
+    const words = nom.split(' ');
+    const initials = words.map(word => word.charAt(0));
+    return initials.join('').toUpperCase();
+  }
+
   projets:Projet[];
   asyncTabs: Observable<ExampleTab[]>;
   /* detail balise */
@@ -161,9 +172,9 @@ export class SelectProjetComponent implements OnInit {
       /*   les type des action gerer par se composant :: les sliders   */
       setTimeout(() => {
         observer.next([
-          {label: 'Gerer', content: 'Content 1'},
-          {label: 'nouveau', content: 'Content 2'},
-          {label: 'Invitation', content: 'Content 3'},
+          {label: 'Mes projets', content: 'Content 1'},
+          {label: 'Nouveau projet', content: 'Content 2'},
+          {label: 'Invitation(s)', content: 'Content 3'},
         ]);
       }, 1000);
     });
@@ -179,8 +190,8 @@ export class SelectProjetComponent implements OnInit {
 /*   boutton gerer de content 1  */
   gerer(index:number){
     const dialogRef = this.keyMatDialogue.open(ProjetKeyComponent,{
-      width: '50%',
-      height:'25%',
+      width: '35%',
+      height:'20%',
       data: {
         projet:this.projets[index]
       }

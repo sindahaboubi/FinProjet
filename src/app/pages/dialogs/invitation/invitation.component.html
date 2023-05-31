@@ -1,24 +1,24 @@
-<h1 mat-dialog-title>Inviter des membre</h1>
-<div mat-dialog-content>
-  <h3>projet : {{data.projet?.nom}} </h3>
+<h1 mat-dialog-title>Inviter un membre pour ce projet</h1>
+<hr>
+<span mat-dialog-content>
+  <h3 class="titreProjet">{{data.projet?.nom}}</h3>
 
   <ng-container [formGroup]="rolePkForm">
   <mat-form-field class="w-100" appearance="fill">
-    <mat-label>notre liste des membre</mat-label>
+    <mat-label>Membre</mat-label>
     <mat-select formControlName="membreId"  >
       <mat-option *ngFor="let m of membreList" [value]="m.id">{{m.email}}</mat-option>
     </mat-select>
-    <mat-error *ngIf="rolePkForm.get('membreId').hasError('required')">tu dois choisir un membre</mat-error>
+    <mat-error *ngIf="rolePkForm.get('membreId').hasError('required')">Veuillez sélectionner un membre</mat-error>
   </mat-form-field>
   </ng-container>
   <ng-container [formGroup]="roleForm">
-  <h3>role :</h3>
-  <mat-form-field appearance="fill">
-    <mat-label>liste des roles</mat-label>
+  <mat-form-field class="w-100 roleFormField" appearance="fill">
+    <mat-label>Rôle</mat-label>
     <mat-select formControlName="type" required>
       <mat-option>--</mat-option>
       <mat-option  [value]="'dev team'">
-       development team
+       Membre de développement
       </mat-option>
       <mat-option  [value]="'po'">
         Product owner
@@ -27,19 +27,20 @@
         Scrum master
        </mat-option>
     </mat-select>
-    <mat-error *ngIf="roleForm.get('type').hasError('required')">tu dois choisir le role dans l'equipe</mat-error>
+    <mat-error *ngIf="roleForm.get('type').hasError('required')">Veuillez choisir un rôle</mat-error>
     <mat-error *ngIf="roleForm.get('type').errors?.invalidRole" >
-      Un projet peut avoire un seule
+      Vous avez déjà envoyé un
       <span *ngIf="roleForm.get('type').value == 'po'">Product owner</span>
       <span *ngIf="roleForm.get('type').value == 'scrum master'">Scrum master</span>
-      est vous avez déjà envoyé une invitation contient ce role
-
+      dans ce projet
       </mat-error>
   </mat-form-field>
 </ng-container>
-</div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Annuler</button>
-  <button mat-flat-button color="primary" (click)="inviter()" [disabled]="!allValid()">Ajouter</button>
-</div>
+</span>
+
+<mat-dialog-actions class="mat-dialog-actions-center">
+  <button mat-flat-button (click)="inviter()" [disabled]="!allValid()" class="envoyer-button">Envoyer</button>
+  <button mat-button mat-dialog-close class="close-button">Annuler</button>
+</mat-dialog-actions>
+
 

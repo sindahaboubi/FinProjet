@@ -1,9 +1,29 @@
 #gantt_here{
-  margin-top:5%;
-  margin-left:20%;
+  margin-top:3%;
+  margin-left:0.5%;
   overflow-x: scroll;
-  width: 75%;
-  height: 700px;
+  width: 100%;
+  height: 500px;
+}
+
+.titre{
+  color:rgb(97, 97, 97);
+  float: left;
+  font-size: 20px;
+  margin-top:1%;
+  width: 100%;
+  margin-left: 0.4%;
+  font-weight: bold;
+}
+
+.titreProjet{
+  color: #3fa16a;
+  font-weight: bold;
+}
+
+.periodeProjet{
+  float: right;
+  font-size: 20px;
 }
 
 

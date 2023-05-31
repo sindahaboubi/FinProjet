@@ -1,49 +1,43 @@
 <div class="container card-chart" style="margin-left:0%;width:100%;">
-<h1>Membre de Developpement</h1>
+<h1 class="titre"><i class="fas fa-laptop-code"></i> Les développeurs du projet</h1>
 <div class="row">
-   
-    <div class="col-lg-3 col-md-3  col-sm-3" style="margin-right:-1%" *ngFor="let role of listeRole">
+
+    <div id="element" class="col-lg-3 col-md-3  col-sm-3" style="margin-right:-1%" *ngFor="let role of listeRole">
         <ng-container *ngIf="role.type=='dev team'">
         <div class="card" >
         <div class="card-header d-flex justify-content-center ">
-            <img src="../../../assets/img/emilyz.jpg" height="150" width="200" class="rounded border-secondary align-self-center border border-3" />
-        </div>
-        
+        <img class="profilDev" [src]="decodedImage" alt="Decoded Image">
+    </div>
+
         <div class="card-body">
-            <ul class="">
-                <li class="">Mon nom et Prenom : {{role.membre.nom}}  {{role.membre.prenom}}</li>
-                <li class="">Je suis 
-                    <span class="badge" [ngClass]="{'bg-success':role.membre.status =='ACTIF','bg-danger':role.membre.status =='INACTIF'}">
-                        {{role.membre.status}}
-                    </span>
-                </li>
-                <li class="">Mon adresse : {{role.membre.adresse}}</li>
-                <li class="">Username : {{role.membre.username}}</li>
-                <li class="">
-                    Contacter moi sur 
-                    <ul>
-                        <li>email : {{role.membre.email}}</li>
-                        <li> telephone : {{role.membre.telephone}}</li>
-                    </ul>
-                </li>
-              </ul>
-              <button 
+              <div class="nomPrenom">{{role.membre.nom}}  {{role.membre.prenom}}</div><br>
+
+              <div class="body">
+                <span><i class="fas fa-home"></i> {{role.membre.adresse}}</span><br>
+                <span><i class="fas fa-envelope"></i> {{role.membre.email}}</span><br>
+                <span><i class="fas fa-phone"></i> {{role.membre.telephone}}</span><br>
+                <span class="badge" [ngClass]="{'bg-success':role.membre.status =='ACTIF','bg-danger':role.membre.status =='INACTIF'}">
+                   {{role.membre.status}}
+                </span>
+              </div>
+
+              <button
               matTooltip="Mon performance"
-              mat-fab 
+              mat-fab
               style="margin-left:35%;margin-top:5%;margin-bottom:-7%;"
-              color="warn" 
+              color="warn"
               (click)="openPerformanceDialog(role.membre)">
                 <mat-icon>remove_red_eye</mat-icon>
               </button>
         </div>
         <hr style="margin-bottom:-3%">
         <div class="card-footer" >
-            J'ai fait l'inscription dans numeryx Scrum Le {{role.membre.dateInscription|date:'dd-MMMM-yyyy'}}
+          Est inscrit en ProJiro le <br>
+          <span class="date"><i class="fas fa-calendar-check"></i>  {{role.membre.dateInscription|date:'dd-MMMM-yyyy'}}</span>
         </div>
     </div>
-   
+
     </ng-container>
 </div>
 </div>
 </div>
-

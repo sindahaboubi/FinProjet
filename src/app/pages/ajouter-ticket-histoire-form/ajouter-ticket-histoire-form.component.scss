@@ -19,7 +19,26 @@ h2 {
 }
 
 .btnSuivant{
-  background-color: rgb(91, 91, 255);
-  color: white;
-  padding: 15px;
+  background-color: rgb(196, 0, 0);
+  text-color:white;
+}
+
+.btnAnnuler{
+  background-color: rgb(240, 240, 240);
+}
+
+.btnRetour{
+  background-color: rgb(240, 240, 240);
+}
+
+.btnCreer{
+  background-color: rgb(0, 0, 161);
+  text-color:white;
+}
+
+.titreDialog{
+  text-align: center;
+  margin-bottom: 1%;
+  background-color: rgb(240, 240, 240);
+  color:rgb(87, 87, 87);
 }

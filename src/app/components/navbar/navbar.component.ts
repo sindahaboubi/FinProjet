@@ -95,6 +95,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.membreService.afficherTousMembres().subscribe(
         data =>{
           this.membresApp = data
+          console.log('liste = ',this.membresApp);
+          console.log('data = ',data)
         }
       )
     }
@@ -245,7 +247,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   openSearchPanel() {
     this.dialogRecherche.open(SearchPanelComponent,{
       width: '800px',
-      position:{ top: '40px', left: '350px'},
+      position:{ top: '90px', left: '350px'},
       height:'70px',
       data: {
         membres:this.membresApp
@@ -312,10 +314,22 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   navigationProjet(){
-
+    if(this.role=='chefProjet'){
+      this.router.navigate(['/liste-projet']);
+    }else{
+      this.router.navigate(['/liste-projet-membre']);
+    }
   }
-  logOut(){
 
+  logOut(): void {
+    localStorage.clear();
+    sessionStorage.clear();
+    this.router.navigate(['/auth']);
+  }
+
+
+  isOnProjetsPage(): boolean {
+    return this.router.url.includes('/liste-projet');
   }
 
 

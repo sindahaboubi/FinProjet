@@ -47,7 +47,36 @@ my-select{
   }
 
   .etat{
-    font-family: serif;
-    margin-top: 60%;
-    text-decoration: underline;
+    margin-top: 38%;
+    font-weight: bold;
   }
+
+  .titre{
+    margin-left: 3%;
+  }
+
+  .titreDialog{
+    background-color: rgb(240, 240, 240);
+  }
+
+  .btnDetails{
+    margin-bottom:2%;
+    width:100%;
+    align:center;
+    text-align:center
+  }
+
+  .btnDetails:hover{
+    background-color: rgb(194, 253, 253);
+  }
+
+  .btnAnnuler{
+    text-align: center;
+    width: 100%;
+  }
+
+  .btnAnnuler:hover{
+    background-color: rgb(255, 231, 187);
+  }
+
+

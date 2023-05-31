@@ -4,9 +4,12 @@ import * as JSZip from "jszip";
 import { ToastrService } from "ngx-toastr";
 import { Dossier } from "src/app/model/dossier";
 import { Membre } from "src/app/model/membre";
+import { Role } from "src/app/model/role";
 import { AntiVerusService } from "src/app/service/anti-verus.service";
+import { AuthentificationService } from "src/app/service/authentification.service";
 import { DossierService } from "src/app/service/dossier.service";
 import { MembreService } from "src/app/service/membre.service";
+import { ProjetServiceService } from "src/app/service/projet-service.service";
 import { WebSocketDossierService } from "src/app/service/web-socket-dossier.service";
 import Swal from "sweetalert2";
 
@@ -29,7 +32,9 @@ export class TablesComponent implements OnInit {
     private antiVerusService:AntiVerusService,
     private router: Router,
     private webSocketService:WebSocketDossierService,
-    private membreService:MembreService
+    private membreService:MembreService,
+    private authentificationService:AuthentificationService,
+    private projetService:ProjetServiceService
   ) {
     this.webSocketService.messageHandlingAddDos(null).subscribe(
       message => {
@@ -46,8 +51,18 @@ export class TablesComponent implements OnInit {
     )
 
   }
-  membre:Membre
+  membre:Membre;
+  role:string;
   ngOnInit() {
+    if(this.authentificationService.getUserRolesToken(sessionStorage.getItem('token')).roles.includes('chefProjet')){
+      this.role='chefProjet';
+    }else{
+      const roleToken = this.authentificationService.getUserRolesToken(sessionStorage.getItem('token')).roles as Role[]
+      this.role = roleToken.find(role =>
+         role.pk.membreId == this.membreService.getMembreFromToken().id
+         && role.pk.projetId == this.projetService.getProjetFromLocalStorage().id).type
+    }
+
     this.membre = this.membreService.getMembreFromToken();
     this.folderName = ""
     const projet = JSON.parse(localStorage.getItem('projet'))
@@ -75,14 +90,14 @@ export class TablesComponent implements OnInit {
 
     if (totalSize >  30000000) {
       console.log("error");
-      this.toastr.error("ce fichier contient plus que 300MB")
+      this.toastr.error("Ce fichier contient plus de 300MB")
       event.target.value = '';
     }else{
       const folderNameDiv = document.getElementById("folderName");
       const folderDiv = document.getElementById("folder");
 
       folderDiv.classList.add("has-files")
-      folderNameDiv.innerHTML = "nom de dossier : "+this.folderName
+      folderNameDiv.innerHTML = "Nom du dossier : "+this.folderName
       for(let file of files){
         const path = file.webkitRelativePath.split(`${this.folderName}/`)[1];
         this.zip.file(path,file)
@@ -92,7 +107,7 @@ export class TablesComponent implements OnInit {
           this.antiVerusService.getReport().subscribe(
             resultat => {
               if (resultat.data.attributes.stats.malicious > 0) {
-                this.toastr.error("Virus détecté !! \nAttention a ce que vous emettez dans l'application");
+                this.toastr.error("Un virus a été détecté !! \nAttention à ce que vous mettez dans l'application !");
                 this.reloadPage()
               } else {
                 this.toastr.success("Dossier sain.");
@@ -139,7 +154,7 @@ export class TablesComponent implements OnInit {
            )
         },
         error => {
-          this.toastr.error("vous avez déjà inserer ce dossier")
+          this.toastr.error("Vous avez déjà importé le même dossier !")
         }
       )
 
@@ -150,12 +165,12 @@ export class TablesComponent implements OnInit {
 
   supprimerDossier(dossier:Dossier){
     Swal.fire({
-      title: "Clé correct, vous êtes sûr de supprimer le dossier : "+dossier.nomDossier,
+      title: "Clé correcte, vous êtes sûr de supprimer le dossier : "+dossier.nomDossier+" ?",
       icon: 'info',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Oui, Lancer!',
+      confirmButtonText: 'Oui, Supprimer',
       cancelButtonText: 'Annuler',
       background:'rgba(0,0,0,0.9)',
       backdrop: 'rgba(0,0,0,0.4)',
@@ -177,7 +192,7 @@ export class TablesComponent implements OnInit {
           error => {
             Swal.fire(
               'Erreur',
-              'suppression impossible ',
+              'Suppression impossible ',
               'error'
             )
           }

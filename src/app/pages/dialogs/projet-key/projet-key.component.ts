@@ -81,8 +81,8 @@ export class ProjetKeyComponent implements OnInit {
       })
     }else
     Swal.fire(
-      'Erreur',
-      'cles incorrect',
+      'Clé incorrecte',
+      'Veuillez réssayer !',
       'error'
     )
   }

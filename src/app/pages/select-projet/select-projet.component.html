@@ -1,3 +1,5 @@
+<app-navbar></app-navbar>
+
 <div class="container">
   <div class="col-lg-7 mx-auto" style="margin-top:10%;">
     <div class="card ">
@@ -10,19 +12,18 @@
           <div class="card-body">
             <!-- block proger a gerer -->
             <mat-list class="my-list" *ngIf="tab.content=='Content 1'">
-              <div mat-subheader style="color:rgb(238, 238, 238)">projets</div>
               <mat-list-item class="projet"  *ngFor="let projet of projets;index as i">
-                <mat-icon matListItemIcon style="color:rgb(238, 238, 238)">folder</mat-icon>
+                <mat-icon matListItemIcon style="color:rgb(233, 157, 15)">folder</mat-icon>
                 <div matListItemTitle style="color:rgb(238, 238, 238)">
-                  {{projet.nom}}
+                  <span class="nomProjet">{{projet.nom}}</span>
                   <button mat-mini-fab color="warn" class="pull-right" (click)="gerer(i)"
                     aria-label="Example icon button with a filter list icon">
                     <mat-icon>settings</mat-icon>
                   </button>
                 </div>
 
-                <div matListItemLine class="d-flex" style="color:rgb(238, 238, 238)">
-                  {{projet.dateDebut | date}}
+                <div matListItemLine id="dateProjet" class="d-flex">
+                  De {{projet.dateDebut | date}} à {{projet.dateFin |date}}
 
                 </div>
 
@@ -60,13 +61,13 @@
 
               </div>
               <mat-form-field>
-                <mat-label>Clés</mat-label>
+                <mat-label>Clé</mat-label>
                 <input matInput formControlName="cles">
               </mat-form-field>
 
               <button type="submit" mat-raised-button color="primary" [disabled]="projetForm.invalid"
                 mat-raised-button>Enregistrer</button>
-              <button type="button" mat-raised-button (click)="onCancel()">Annuler</button>
+              <button type="button" class="custom-warn" mat-raised-button (click)="onCancel()">Annuler</button>
 
             </form>
 
@@ -85,7 +86,7 @@
                     Les projets
                   </mat-panel-title>
                   <mat-panel-description>
-                    Selectionner un projet a traiter
+                    Séléctionnez un projet à traiter
                     <mat-icon>payment</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
@@ -95,7 +96,7 @@
                   <mat-select formControlName="projetId" >
                     <mat-option *ngFor="let p of projets" (click)="recupererMembreProjet()" [value]="p.id">{{p.nom}} -- cles#{{p.cles}} </mat-option>
                   </mat-select>
-                  <mat-error *ngIf="rolePkForm.get('projetId').hasError('required')">il faut choisir un projet</mat-error>
+                  <mat-error *ngIf="rolePkForm.get('projetId').hasError('required')">Il faut choisir un projet</mat-error>
                 </mat-form-field>
                 <mat-action-row>
                   <button mat-button color="primary" [disabled]="rolePkForm.invalid" (click)="nextStep()">Suivant</button>
@@ -114,7 +115,7 @@
                     Les membres
                   </mat-panel-title>
                   <mat-panel-description>
-                    Selectionner un membre a inviter
+                    Selectionnez un membre à inviter
                     <mat-icon>account_circle</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
@@ -125,7 +126,7 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-action-row>
-                  <button mat-button color="warn" (click)="prevStep()">Précedent</button>
+                  <button mat-button color="warn" (click)="prevStep()">Précédent</button>
                   <button mat-button color="primary" (click)="nextStep()">Suivant</button>
                 </mat-action-row>
               </mat-expansion-panel>
@@ -144,21 +145,21 @@
                     Email
                   </mat-panel-title>
                   <mat-panel-description>
-                    saisie l'email du membre non trouvé dans la liste
+                    Veuilez saisir l'email du membre non existant dans la liste
                     <mat-icon>alternate_email</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
 
                 <mat-form-field  appearance="fill">
-                  <mat-label>e-mail</mat-label>
+                  <mat-label>E-mail</mat-label>
                   <input formControlName="emailInvitee"   matInput>
-                  <mat-error *ngIf="invitationForm.get('emailInvitee').touched && invitationForm.get('emailInvitee').hasError('required')">le champ email est obligatoire</mat-error>
-                  <mat-error *ngIf="invitationForm.get('emailInvitee').dirty && invitationForm.get('emailInvitee').errors?.emailExists">vous avez déjà envoyé une invitation a ce mail</mat-error>
-                  <mat-hint class="text-warning" *ngIf="invitationForm.get('emailInvitee').dirty && invitationForm.get('emailInvitee').errors?.invalidEmail">vous devez respecter les regle de nommage d'un mail "@"  et "."</mat-hint>
+                  <mat-error *ngIf="invitationForm.get('emailInvitee').touched && invitationForm.get('emailInvitee').hasError('required')">Le champ email est obligatoire</mat-error>
+                  <mat-error *ngIf="invitationForm.get('emailInvitee').dirty && invitationForm.get('emailInvitee').errors?.emailExists">Vous avez déjà envoyé une invitation a ce membre !</mat-error>
+                  <mat-hint class="text-warning" *ngIf="invitationForm.get('emailInvitee').dirty && invitationForm.get('emailInvitee').errors?.invalidEmail">Vous devez respecter les régles de nommage d'un mail "@"  et "."</mat-hint>
                 </mat-form-field>
 
                 <mat-action-row>
-                  <button mat-button color="warn" (click)="prevStep()">Précedent</button>
+                  <button mat-button color="warn" (click)="prevStep()">Précédent</button>
                   <button mat-button color="primary" [disabled]="invitationForm.invalid" (click)="nextStep()">Suivant</button>
                 </mat-action-row>
               </mat-expansion-panel>
@@ -171,7 +172,7 @@
                     Role
                   </mat-panel-title>
                   <mat-panel-description>
-                    Role du membre(s) dans le projet
+                    Rôle du membre(s) dans le projet
                     <mat-icon>report</mat-icon>
                   </mat-panel-description>
                 </mat-expansion-panel-header>
@@ -207,13 +208,13 @@
                                 Scrum master
                                </mat-option>
                             </mat-select>
-                            <mat-error *ngIf="roleForm.get('type').hasError('required')">tu dois choisir le role dans l'equipe</mat-error>
+                            <mat-error *ngIf="roleForm.get('type').hasError('required')">Vous devez choisir le rôle dans l'equipe</mat-error>
                             <!-- validateur de role existant -->
                             <mat-error *ngIf="roleForm.get('type').errors?.invalidRole" >
-                              Un projet peut avoire un seule
+                              Un projet doit avoir un seul
                               <span *ngIf="roleForm.get('type').value == 'po'">Product owner</span>
                               <span *ngIf="roleForm.get('type').value == 'scrum master'">Scrum master</span>
-                              est vous avez déjà envoyé une invitation contient ce role
+                              et vous avez déjà envoyé une invitation qui contient ce rôle
 
                               </mat-error>
                             <!-- end  -->

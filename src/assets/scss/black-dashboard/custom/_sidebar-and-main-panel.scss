@@ -69,7 +69,6 @@
               }
 
               .sidebar-mini-icon{
-                text-transform: uppercase;
                 width: 34px;
                 margin-right: 10px;
                 margin-left: 0px;
@@ -159,7 +158,7 @@
                 position: relative;
                 text-transform: uppercase;
                 cursor: pointer;
-                font-size: $font-size-xs;
+                font-size: 11px;
                 padding: 10px 8px;
                 line-height: $line-height-lg;
             }
@@ -416,6 +415,8 @@
 .visible-on-sidebar-mini{
     display: none !important;
 }
+
+
 
 .off-canvas-sidebar{
     .nav {
